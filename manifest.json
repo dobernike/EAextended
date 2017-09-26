@@ -1,0 +1,41 @@
+﻿{
+ "manifest_version": 2,
+ "name": "EAextend_beta_version", // Название расширения
+ "version": "2.0.1", // Номер версии
+ "description": "Автоматизация накладной", // Описание расширения
+ "icons": {
+  "48":"img/icon.png"
+},
+ 
+ "browser_action" : {
+  "default_title" : "Автоматизация накладной", //Текст, всплывающий при наведении курсора на иконку (если не задан, то всплывает название расширения)
+  "default_icon" : "img/icon.png" //Иконка для панели расширений (по умолчанию)
+  //"default_popup" : "popup.html" //Всплывающее окно при клике на иконке
+},
+
+ "permissions":
+ [
+	"tabs", // Разрешить расширению работать с вкладками
+	"storage",
+	"https://euroauto.ru/*",
+	"http://euroauto.ru/*",
+	"http://summa-propisyu.ru/*",
+	"https://barcode.tec-it.com/*",
+ 	"http://localhost/*" // Разрешить расширению обращаться к указанному адресу
+
+ ],
+
+ "content_scripts": [
+   {
+     "matches": ["http://opt.euroauto.ru/index.php?task=invoicePrint&option=com_eaopt&id=*", "http://opt.euroauto.ru/?task=invoicePrint&option=com_eaopt&id=*"],
+     "js": ["source/jquery-1.11.3.min.js","opt.js", "source/JsBarcode.all.min.js"],
+     "run_at" : "document_end"
+   },
+   {
+     "matches": ["http://opt.euroauto.ru/lib/basketnkprint.php?nkid=*",
+        "https://opt.euroauto.ru/lib/basketnkprint.php?nkid=*"],
+     "js": ["source/jquery-1.11.3.min.js", "magasine.js", "source/JsBarcode.all.min.js"],
+     "run_at" : "document_end"
+   }
+	]
+}
