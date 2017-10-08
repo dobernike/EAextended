@@ -1,4 +1,5 @@
-String.prototype.replaceAll = function(search, replace) {
+//Паша ты рукожоп
+String.prototype.replaceAll = function (search, replace) {
   return this.split(search).join(replace);
 };
 function toNumber(string) {
