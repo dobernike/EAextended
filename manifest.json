@@ -1,7 +1,7 @@
 ﻿{
  "manifest_version": 2,
  "name": "EAextend_beta_version", // Название расширения
- "version": "2.1.2", // Номер версии
+ "version": "1.1.1", // Номер версии
  "description": "Автоматизация накладной", // Описание расширения
  "icons": {
   "48":"img/icon.png"
