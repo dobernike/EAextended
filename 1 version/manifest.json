@@ -19,7 +19,8 @@
 	"storage",
 	"https://euroauto.ru/*",
 	"http://euroauto.ru/*",
-	"http://summa-propisyu.ru/*",
+  "http://summa-propisyu.ru/*",
+  "https://summa-propisyu.ru/*",
 	"https://barcode.tec-it.com/*",
  	"http://localhost/*" // Разрешить расширению обращаться к указанному адресу
 

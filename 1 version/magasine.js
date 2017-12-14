@@ -53,11 +53,11 @@ function recalculate() {
       $("#result").text(summFull + "руб.");
 
       // result
-
-      $.get("http://summa-propisyu.ru/?summ=" + summ, function(data) {
+      console.log(summ);
+      $.get("https://summa-propisyu.ru/?summ=" + summ, function(data) {
         $("#sum-names").html(
-          data.match(/<textarea.*result2>(.*?)<\/textarea>/)[1]
-        );
+          console.log(data.match(/<textarea.*result1>(.*?)<\/textarea>/)[1]
+        ));
       });
     }
   });
@@ -69,7 +69,7 @@ function recalculate() {
   " " +
   MaxPrice[0] +
   " " +
-  (summ - realsumm) / 2 +
+  (summ - realsumm)+
   " руб";
 }
 
@@ -105,13 +105,13 @@ function genRow(res) {
       if (price) {
         price = price[2].replace(" ", "");
 
-        if (itemName.toLowerCase().indexOf("масло") > -1) {
-          price = roundDown(toNumber(price), 100);
-        } else {
-          price = toNumber(price) * 0.85;
-        }
+       // if (itemName.toLowerCase().indexOf("масло") > -1) {
+       //   price = roundDown(toNumber(price));
+      //  } else {
+       //   price = toNumber(price);
+       // }
 
-        var totalPrice = roundUp(price * count, 50);
+        var totalPrice = price * count;
         price = totalPrice / count;
 
         goods +=
