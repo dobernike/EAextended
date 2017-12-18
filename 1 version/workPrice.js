@@ -1,5 +1,8 @@
 
-
+let elem = $('.header-wrap');
+let elem2 = $('#footer');
+let elem3 = $('.chat-item');
+let elem4 = $('.target_zapis_na_sto');
 let rows = $('#costOfWorkList tbody tr');
 let el = '';
 let el1 = '';
@@ -7,6 +10,11 @@ let el2 = 0;
 let el3 = 0;
 let el4 = '';
 let el5 = '';
+
+elem.remove();
+elem2.remove();
+elem3.remove();
+elem4.remove();
 
 $.each(rows, function (index, value) {
   
@@ -59,7 +67,10 @@ let el12 =0;
 let array = [];
 
 $.each(rows2, function (index, value) {
-  
+  if (index > this.length) {
+  //  Reload();
+  };
+
   if (index != this.length) {
     el = value.cells[1].textContent ;
     el1 = el.replace(' ', '');
@@ -102,7 +113,6 @@ $.each(rows2, function (index, value) {
     value.cells[1].textContent = el5;
     value.cells[3].textContent = el10;
     array.push(el8);
-    
   };
 });
 
@@ -122,19 +132,18 @@ console.log(el11);
 //дожидаемся полной загрузки страницы
   
       //получаем идентификатор элемента
-      let a = $('target-add-work');
-      console.log(a);
-      
+      let a = $('.target-add-work');
+    
+     // Document.getElementsByClassName('.target-add-work').addEventListener('click',Reload);
+     console.log(document.getElementsByClassName('target-add-work').onclick);
+     
       //вешаем на него событие
-      a.onclick = function() {
+      /*a.onclick = function() {
           //производим какие-то действия
-         console.log('hello');
+          a = Reload;
           //предотвращаем переход по ссылке href
-      };
+      };*/
 
-      function roundDown2(num, precision) {
-        return Math.floor(num / precision) * precision;
-      }
       function roundDown(num, precision){
         return Math.floor(num - precision);
       }
@@ -148,3 +157,7 @@ console.log(el11);
           .reverse()
           .join("");
       }
+
+      function Reload() {
+        window.location.reload();
+      };
