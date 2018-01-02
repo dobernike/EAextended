@@ -38,10 +38,10 @@ $.each(rows, function (index, value) {
       el3 = roundDown(el2, 500);
     } else if (el2 >= 900){
       el3 = roundDown(el2, 300);
-    } else if (el2 == 737){
+/*    } else if (el2 == 737){
       el3 = 700;
     } else if (el2 == 550){
-      el3 = 650;
+      el3 = 650;              */
     } else if (el2 >= 500){
       el3 = roundDown(el2, 150);
    } else if (el2 >= 250){
@@ -91,10 +91,10 @@ $.each(rows2, function (index, value) {
       el3 = roundDown(el2, 500);
     } else if (el2 >= 900){
       el3 = roundDown(el2, 300);
-    } else if (el2 == 737){
+/*    } else if (el2 == 737){
       el3 = 700;
     } else if (el2 == 550){
-      el3 = 650;
+      el3 = 650;              */
     } else if (el2 >= 500){
       el3 = roundDown(el2, 150);
    } else if (el2 >= 250){
