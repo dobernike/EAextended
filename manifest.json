@@ -1,4 +1,4 @@
-﻿{
+{
  "manifest_version": 2,
  "name": "EAextend_beta_version", // Название расширения
  "version": "1.1.1", // Номер версии
@@ -20,7 +20,6 @@
 	"https://euroauto.ru/*",
 	"http://euroauto.ru/*",
 	"http://summa-propisyu.ru/*",
-	"https://barcode.tec-it.com/*",
  	"http://localhost/*" // Разрешить расширению обращаться к указанному адресу
 
  ],
@@ -31,6 +30,11 @@
      "js": ["source/jquery-1.11.3.min.js","opt.js", "source/JsBarcode.all.min.js"],
      "run_at" : "document_end"
    },
+   {
+    "matches": ["http://opt.euroauto.ru/index.php?option=com_eaopt&task=searchByOrigGrup&other_wh=0&orig_grup=*", "https://opt.euroauto.ru/index.php?option=com_eaopt&task=searchByOrigGrup&other_wh=0&orig_grup=**"],
+    "js": ["marketplace.js"],
+    "run_at" : "document_end"
+  },
    {
      "matches": ["http://opt.euroauto.ru/lib/basketnkprint.php?nkid=*",
         "https://opt.euroauto.ru/lib/basketnkprint.php?nkid=*"],
