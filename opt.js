@@ -210,7 +210,7 @@ function recalculate() {
       let sumString = $("#sum-names").html(summ.numberToString(true));
     }
   });
-  document.title = date + " / "+(summ - realsumm) / 2 + " руб /" + " № " + actNum + " / " +MaxPrice[0];
+  document.title = date + " "+(summ - realsumm) / 2 + " руб " + " № " + actNum + " " +MaxPrice[0];
 };
 ///////////////////////////////////////////////////////////////////////// Сумма прописью /////////////
 function numberToString(_number, toUpper) {
