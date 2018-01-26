@@ -59,27 +59,18 @@ function recalculate() {
       $("#result").text(summFull + "руб.");
 
       // result
-      console.log(summ);
+    
 
       let sumString = $("#sum-names").html(summ.numberToString(true));
-      console.log(sumString)
+    
 
     }
   });
   NumberRise();
-  console.log("order " + order + " MaxPrice " + MaxPrice + " summ " + summ + " realsumm " + realsumm);
-  document.title =
-    "Накладная № " +
-    order +
-    " " +
-    MaxPrice[0] +
-    " " +
-    (summ - realsumm) +
-    " руб";
+  document.title = date + " "+(summ - realsumm) + " руб" + " № " + order + " " +MaxPrice[0];
 }
 
 var logic = '<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>Накладная № {{order}}</title><style>table { font-size: 100%; border-collapse: collapse;border-spacing: none;}body { font-size: 10pt; font-family: Arial, Verdana, sans-serif;}h1 { margin : 0 }table#header { width: 100%; margin-bottom: 1ex }#header, #header h1, #pay_till { font-size: 14pt; font-weight: bold; }#pay_till { font-size: 14pt; text-align: right;}table#info {width: 100%;}td#course {text-align: right;font-weight: bold;font-size: 11pt;}ul#receiver, ul#receiver li { list-style-type: none; margin: 0; padding: 0; }body { padding: 1em; }ul {list-style-type: disc;margin: 2ex 1em;}table#order {width: 100%;}table#order td, table#order th {font-size: 9pt;border: 1px solid black;padding: 0.5ex 0.5em;}table#order td {text-align: right;}table#order td.item-name {text-align: left;}table#order tr.total td {border: none;font-weight: bold;}table#order td.units {text-align: center;}#sum-names {font-weight: bold;text-decoration: underline;}table#subscripts {width: 100%;}table#subscripts td {border-bottom: 1px solid black;width: 35%;}table#subscripts th {padding-left: 3em;text-align: left;}</style></head><body><table id="header"><tbody><tr><td><h1>Расходная накладная № {{order}} от {{date}}</h1></td><td id="pay_till"></td></tr></tbody></table><table id="info"><tbody><tr><td><ul id="receiver"><b><li>Адрес поставки: Стрельна, ул. Нижняя Колония, д. 49Б +79626803377</li> <li>Поставщик: Индивидуальный Предприниматель Федюшин П.Д.</li></b></ul></td></tr></tbody></table><table id="order"><thead><tr><th>№</th><th>Товар</th><th>Кол.</th><th>Ед.</th><th>Цена (руб)</th><th>Сумма (руб)</th></tr></thead><tbody>{{goods}}<tr class="total"><td colspan="5">Итого:</td><td>{{result}} </td></tr></tbody></table><p><p>Всего наименований <b id="columns"></b> на сумму <b id="result"></b></p></p><p id="sum-names">{{human_result}}</p><table id="subscripts"><tbody><tr><th>Отпустил</th><td>&nbsp;</td><th>Получил</th><td>&nbsp;</td></tr></tbody></table></body></html>';
-console.log(logic);
 var order = "";
 var goods = "";
 var date = "";
@@ -155,9 +146,9 @@ $("document").ready(function () {
   var realsummt = $('span:contains("Итого:")')
     .html()
     .replace(" ", "").match(/(\d{1,16})/)[1];
-  console.log(realsummt)
+  
   realsumm = toNumber(realsummt);
-  console.log(realsumm)
+  
   cnt = $("td.currency:odd").length;
   order = $('span:contains("Заказ")')
     .text()
@@ -209,7 +200,7 @@ $("document").ready(function () {
 });
 
 function finalise() {
-  console.log('finalise');
+  
   ///replace///
   let logic1 = logic
     .replaceAll("{{order}}", order)

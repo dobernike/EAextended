@@ -12,8 +12,10 @@ console.log("hiss12");
 var MaxPrice = [];
 var realsumm = 0;
 var actNum = "";
-
+var date = "";
 $("document").ready(function () {
+
+  date = $("h1").html().match(/(\d{2}).(\d{2}).(\d{4})/)[0];
 
   var realsummt = $('td[colspan="5"]')
     .next()
@@ -208,14 +210,7 @@ function recalculate() {
       let sumString = $("#sum-names").html(summ.numberToString(true));
     }
   });
-  document.title =
-    "Накладная № " +
-    actNum +
-    " " +
-    MaxPrice[0] +
-    " " +
-    (summ - realsumm) / 2 +
-    " руб";
+  document.title = date + " / "+(summ - realsumm) / 2 + " руб /" + " № " + actNum + " / " +MaxPrice[0];
 };
 ///////////////////////////////////////////////////////////////////////// Сумма прописью /////////////
 function numberToString(_number, toUpper) {
