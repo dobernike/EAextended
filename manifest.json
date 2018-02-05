@@ -44,7 +44,7 @@
         "http://opt.euroauto.ru/index.php?option=com_eaopt&task=basket*",
         "https://opt.euroauto.ru/index.php?option=com_eaopt&task=basket*"
       ],
-      "js": ["basket.js","source/jquery-1.11.3.min.js"],
+      "js": ["basket.js"],
       "run_at": "document_end"
     },
     {
