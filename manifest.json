@@ -37,6 +37,17 @@
       "run_at": "document_end"
     },
     {
+      "matches": ["http://opt.euroauto.ru/proposal/?option=com_eaopt&task=basket*",
+        "http://opt.euroauto.ru/?option=com_eaopt&task=basket*",
+        "https://opt.euroauto.ru/proposal/?option=com_eaopt&task=basket*",
+        "https://opt.euroauto.ru/?option=com_eaopt&task=basket*",
+        "http://opt.euroauto.ru/index.php?option=com_eaopt&task=basket*",
+        "https://opt.euroauto.ru/index.php?option=com_eaopt&task=basket*"
+      ],
+      "js": ["basket.js","source/jquery-1.11.3.min.js"],
+      "run_at": "document_end"
+    },
+    {
       "matches": ["http://opt.euroauto.ru/lib/basketnkprint.php?nkid=*",
         "https://opt.euroauto.ru/lib/basketnkprint.php?nkid=*"
       ],
