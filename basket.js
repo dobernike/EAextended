@@ -117,18 +117,6 @@ if (pricingEa == 'selected' && priceEa.length > 0)
 
 
 //////////////////////////////////////////////functions///////////////////////////////////////////////////////
-
-function getAjax(url, success) {
-   let xhr = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
-    xhr.open('GET', url);                                                   //ассинхронность?
-    xhr.onreadystatechange = function() {
-        if (xhr.readyState>3 && xhr.status==200) success(xhr.responseText);
-    };
-    xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-    xhr.send();
-    return xhr;
-}
-
 function toNumber(string) {
     return parseFloat(string.replace(",", "."));
 }
