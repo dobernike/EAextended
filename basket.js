@@ -12,19 +12,23 @@ if (pricingEa == 'selected' && priceEa.length > 0)
     let x = 0;
     let price;
     let realSumm = document.getElementsByTagName('h3')[0].innerText.match(/Итого: \b(\d*)/)[1];
-
     switch(priceEa.length) { //костыль
         case 1:
         case 2:
         case 3:
         case 4:
         case 5:
-        timeout = 3600;
-        console.log("5, timeout is: "+timeout);
+        timeout = 1200;
+        break;
+        case 6:
+        case 7:
+        case 8:
+        case 9:
+        case 10:
+        timeout = 1700;
         break;
         default:
-        timeout = 4500;
-        console.log("default, timeout is: "+timeout);
+        timeout = 2700;
     }
 
     for (let i = 0; i < priceEa.length; i++) 
@@ -37,30 +41,35 @@ if (pricingEa == 'selected' && priceEa.length > 0)
         let url2 = "https://euroauto.ru/firms/" + firm + "/" + art + "/";
 
         // cross xhr для выявления розничной цены
-        getAjax(url, function(data){ 
-           let price = data.match(
-                /(<span .* itemprop="price".*>|<span .*price_num_real.*>)(.*?)<\/span>/
-              );
+        fetch(url)
+  .then((resp) => resp.text())
+  .then(function(data) {
+    console.log('request succeeded with JSON response')
+    let price = data.match(
+        /(<span .* itemprop="price".*>|<span .*price_num_real.*>)(.*?)<\/span>/
+      );
 
-              if (price) {
-                price = price[2].replace(" ", "");
+      if (price) {
+        price = price[2].replace(" ", "");
 
-                if (itemName.toLowerCase().indexOf("масло") > -1) {
-                     price = roundDown((price), 100);
-                } else {
-                    // Устанавливается скидка 15%
-                     price = roundUp((price) * 0.85, 50); 
-                }
-                // Заменяется цена и сумма на скидочную
-                 priceEa[i].cells[5].innerText = price;
-                 priceEa[i].cells[7].innerText = (price * priceEa[i].cells[6].innerText);
-                 // Высчитывается общая сумма
-                x += Number(priceEa[i].cells[7].innerText);
-                   
-                } else {
-                    console.log('search with firm');
-                    getAjax(url2, function(data){ 
-                        price = data.match(/(<span .* itemprop="price".*>|<span .*price_num_real.*>)(.*?)<\/span>/);
+        if (itemName.toLowerCase().indexOf("масло") > -1) {
+             price = roundDown((price), 100);
+        } else {
+            // Устанавливается скидка 15%
+             price = roundUp((price) * 0.85, 50); 
+        }
+        // Заменяется цена и сумма на скидочную
+         priceEa[i].cells[5].innerText = price;
+         priceEa[i].cells[7].innerText = (price * priceEa[i].cells[6].innerText);
+         // Высчитывается общая сумма
+        x += Number(priceEa[i].cells[7].innerText);
+           
+        } else {
+            console.log('search with firm');
+            fetch(url2)
+            .then((resp) => resp.text())
+            .then(function(data) {
+                price = data.match(/(<span .* itemprop="price".*>|<span .*price_num_real.*>)(.*?)<\/span>/);
             
                           if (price) {
                             price = price[2].replace(" ", "");
@@ -80,7 +89,14 @@ if (pricingEa == 'selected' && priceEa.length > 0)
                 } else {
                     console.log('error');
                 }})
-            }})
+                
+  }}).catch(function (error) {
+    console.log('request failed', error)
+  })
+
+           
+
+        
 
             if (i == (priceEa.length - 1)) {                                                    
                 setTimeout(function(){                                                         
@@ -90,12 +106,15 @@ if (pricingEa == 'selected' && priceEa.length > 0)
                     document.getElementsByTagName('h3')[0].innerText = "Итого: "+x+" руб. "+ " Прибыль: " + roundUp(((x-realSumm)/2), 10);
                 }
                 }, timeout); //костыль                                                                   
-             }                                                                                  
-
-        }
-} else {
+             }  }        
+                                                                                     
+             console.log('end');
+ 
+        
+            } else {
     alert('Выбери "ЕА розница" и добавьте товары в корзину!');
 }
+
 
 //////////////////////////////////////////////functions///////////////////////////////////////////////////////
 
