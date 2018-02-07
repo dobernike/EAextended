@@ -35,7 +35,10 @@ $("document").ready(function () {
   var doods = "";
   var url3 = "http://euroauto.ru/brand/";
 
-  $.get(url3, function (data) {
+ // $.get(url3, function (data) {
+   fetch(url3)
+   .then((resp) => resp.text())
+   .then(function(data){
     data = data.substring(0, data.indexOf("</select>"));
     while ((rec = regr2.exec(data)) != null) {
       if (rec[1] != "Все бренды") {
@@ -90,7 +93,9 @@ $("document").ready(function () {
         art = art.replaceAll(".", "").replaceAll("/", "").replaceAll("-", "");
         var url = "https://euroauto.ru/searchnr/" + art;
         //  art.replace(".", "").replace("/", "");
-        $.get(url, function (data) {
+      //  $.get(url, function (data) {
+        fetch(url).then((resp) => resp.text())
+        .then(function(data){
           var price = data.match(
             /(<span .* itemprop="price".*>|<span .*price_num_real.*>)(.*?)<\/span>/
           );
@@ -116,7 +121,9 @@ $("document").ready(function () {
           } else {
             var url2 = "https://euroauto.ru/firms/" + firm + "/" + art + "/";
 
-            $.get(url2, function (data) {
+     //       $.get(url2, function (data) {
+       fetch(url2).then((resp) => resp.text())
+       .then(function(data){
               price = data.match(
                 /(<span .* itemprop="price".*>|<span .*price_num_real.*>)(.*?)<\/span>/
               );

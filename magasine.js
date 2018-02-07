@@ -1,3 +1,10 @@
+
+//let uel = document.getElementsByTagName('script')[0];
+//console.log(uel);
+//uel.remove();
+//removeEventListener
+
+
 // old
 String.prototype.replaceAll = function (search, replace) {
   return this.split(search).join(replace);
@@ -93,7 +100,9 @@ function genRow(res) {
 
     var url = "https://euroauto.ru/search/" + art.replace(".", "");
 
-    $.get(url, function (data) {
+    //$.get(url, function (data) {
+      fetch(url).then((resp) => resp.text())
+      .then(function(data){
       var price = data.match(
         /(<span .*price_num_real.*>|<span .* itemprop="price".*>)(.*?)<\/span>/
       );
@@ -143,6 +152,7 @@ function genRow(res) {
 }
 
 $("document").ready(function () {
+
   var realsummt = $('span:contains("Итого:")')
     .html()
     .replace(" ", "").match(/(\d{1,16})/)[1];
@@ -165,7 +175,9 @@ $("document").ready(function () {
   var doods = "";
   var url3 = "http://euroauto.ru/brand/";
 
-  $.get(url3, function (dataDoods) {
+//  $.get(url3, function (dataDoods) {
+  fetch(url3).then((resp) => resp.text())
+  .then(function(dataDoods){
     dataDoods = dataDoods.substring(0, dataDoods.indexOf("</select>"));
     while ((rec = regr2.exec(dataDoods)) != null) {
       if (rec[1] != "Все бренды") {
