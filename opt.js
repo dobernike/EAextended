@@ -35,124 +35,124 @@ $("document").ready(function () {
   var doods = "";
   var url3 = "http://euroauto.ru/brand/";
 
- // $.get(url3, function (data) {
-   fetch(url3)
-   .then((resp) => resp.text())
-   .then(function(data){
-    data = data.substring(0, data.indexOf("</select>"));
-    while ((rec = regr2.exec(data)) != null) {
-      if (rec[1] != "Все бренды") {
-        doods += rec[1] + "|";
+  // $.get(url3, function (data) {
+  fetch(url3)
+    .then((resp) => resp.text())
+    .then(function (data) {
+      data = data.substring(0, data.indexOf("</select>"));
+      while ((rec = regr2.exec(data)) != null) {
+        if (rec[1] != "Все бренды") {
+          doods += rec[1] + "|";
+        }
       }
-    }
-    doods = doods
-      .replaceAll("(", "\\(")
-      .replaceAll(")", "\\)")
-      .replaceAll("/", "\\/");
-    //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ end
-    var infoTable = $("table[id=info]");
-    infoTable.html(
-      '<table id="info"><tr><td><ul id="receiver"><b><li>Адрес поставки: Стрельна, ул. Нижняя Колония, д. 49Б +79626803377</li> <li>Поставщик: Индивидуальный Предприниматель Федюшин П.Д.</li></b></ul></td></tr></table>'
-    );
+      doods = doods
+        .replaceAll("(", "\\(")
+        .replaceAll(")", "\\)")
+        .replaceAll("/", "\\/");
+      //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ end
+      var infoTable = $("table[id=info]");
+      infoTable.html(
+        '<table id="info"><tr><td><ul id="receiver"><b><li>Адрес поставки: Стрельна, ул. Нижняя Колония, д. 49Б +79626803377</li> <li>Поставщик: Индивидуальный Предприниматель Федюшин П.Д.</li></b></ul></td></tr></table>'
+      );
 
-    $(".total")[1].remove();
+      $(".total")[1].remove();
 
-    $("h1").html(
-      $("h1")
-      .html()
-      .replace("/2017", "")
-      .replace("Site-", "")
-    );
-    $("h1").html(
-      $("h1")
-      .html()
-      .replace("16537", getRandomInt(10000, 100000))
-    );
-    actNum = $("h1")
-      .html()
-      .match(/.*№ (.*?) /)[1];
+      $("h1").html(
+        $("h1")
+        .html()
+        .replace("/2017", "")
+        .replace("Site-", "")
+      );
+      $("h1").html(
+        $("h1")
+        .html()
+        .replace("16537", getRandomInt(10000, 100000))
+      );
+      actNum = $("h1")
+        .html()
+        .match(/.*№ (.*?) /)[1];
 
-    $("#pay_till").html('<svg id="barcode"></svg>');
-    JsBarcode("#barcode", actNum, {
-      format: "CODE128",
-      width: 2,
-      height: 50,
-      displayValue: false
-    });
-    var rows = $("#order tbody tr");
-    var cnt = rows.length - 1;
+      $("#pay_till").html('<svg id="barcode"></svg>');
+      JsBarcode("#barcode", actNum, {
+        format: "CODE128",
+        width: 2,
+        height: 50,
+        displayValue: false
+      });
+      var rows = $("#order tbody tr");
+      var cnt = rows.length - 1;
 
-    $.each(rows, function (index, value) {
-      if (index != rows.length - 1) {
-        var mat1 = value.cells[1];
-        var regg = new RegExp("(" + doods + ".*?) (.*?) (.*?)$");
-        var mat = regg.exec(mat1.innerHTML);
-        var art = mat[2];
-        var firm = mat[1];
-        var itemName = mat[3];
-        art = art.replaceAll(".", "").replaceAll("/", "").replaceAll("-", "");
-        var url = "https://euroauto.ru/searchnr/" + art;
-        //  art.replace(".", "").replace("/", "");
-      //  $.get(url, function (data) {
-        fetch(url).then((resp) => resp.text())
-        .then(function(data){
-          var price = data.match(
-            /(<span .* itemprop="price".*>|<span .*price_num_real.*>)(.*?)<\/span>/
-          );
-          if (price) {
-            price = price[2].replace(" ", "");
-
-            if (itemName.toLowerCase().indexOf("масло") > -1) {
-              price = roundDown(toNumber(price), 100);
-            } else {
-              price = roundUp(toNumber(price) * 0.85, 50);
-            }
-            value.cells[4].innerHTML = NumSplitter(price + "");
-            value.cells[5].innerHTML =
-              price * toNumber(value.cells[2].innerHTML);
-            cnt--;
-            if (MaxPrice.length == 0) {
-              MaxPrice[0] = itemName;
-              MaxPrice[1] = price;
-            } else {
-              if (MaxPrice[1] < price) MaxPrice = [itemName, price];
-            }
-            if (cnt == 0) recalculate();
-          } else {
-            var url2 = "https://euroauto.ru/firms/" + firm + "/" + art + "/";
-
-     //       $.get(url2, function (data) {
-       fetch(url2).then((resp) => resp.text())
-       .then(function(data){
-              price = data.match(
+      $.each(rows, function (index, value) {
+        if (index != rows.length - 1) {
+          var mat1 = value.cells[1];
+          var regg = new RegExp("(" + doods + ".*?) (.*?) (.*?)$");
+          var mat = regg.exec(mat1.innerHTML);
+          var art = mat[2];
+          var firm = mat[1];
+          var itemName = mat[3];
+          art = art.replaceAll(".", "").replaceAll("/", "").replaceAll("-", "");
+          var url = "https://euroauto.ru/searchnr/" + art;
+          //  art.replace(".", "").replace("/", "");
+          //  $.get(url, function (data) {
+          fetch(url).then((resp) => resp.text())
+            .then(function (data) {
+              var price = data.match(
                 /(<span .* itemprop="price".*>|<span .*price_num_real.*>)(.*?)<\/span>/
               );
+              if (price) {
+                price = price[2].replace(" ", "");
 
-              price = price[2].replace(" ", "");
-
-              if (itemName.toLowerCase().indexOf("масло") > -1) {
-                price = roundDown(toNumber(price), 100);
+                if (itemName.toLowerCase().indexOf("масло") > -1) {
+                  price = roundDown(toNumber(price), 100);
+                } else {
+                  price = roundUp(toNumber(price) * 0.85, 50);
+                }
+                value.cells[4].innerHTML = NumSplitter(price + "");
+                value.cells[5].innerHTML =
+                  price * toNumber(value.cells[2].innerHTML);
+                cnt--;
+                if (MaxPrice.length == 0) {
+                  MaxPrice[0] = itemName;
+                  MaxPrice[1] = price;
+                } else {
+                  if (MaxPrice[1] < price) MaxPrice = [itemName, price];
+                }
+                if (cnt == 0) recalculate();
               } else {
-                price = roundUp(toNumber(price) * 0.85, 50);
-              }
-              value.cells[4].innerHTML = NumSplitter(price + "");
-              value.cells[5].innerHTML =
-                price * toNumber(value.cells[2].innerHTML);
-              cnt--;
+                var url2 = "https://euroauto.ru/firms/" + firm + "/" + art + "/";
 
-              if (MaxPrice.length == 0) {
-                MaxPrice[0] = itemName;
-                MaxPrice[1] = price;
-              } else {
-                if (MaxPrice[1] < price) MaxPrice = [itemName, price];
+                //       $.get(url2, function (data) {
+                fetch(url2).then((resp) => resp.text())
+                  .then(function (data) {
+                    price = data.match(
+                      /(<span .* itemprop="price".*>|<span .*price_num_real.*>)(.*?)<\/span>/
+                    );
+
+                    price = price[2].replace(" ", "");
+
+                    if (itemName.toLowerCase().indexOf("масло") > -1) {
+                      price = roundDown(toNumber(price), 100);
+                    } else {
+                      price = roundUp(toNumber(price) * 0.85, 50);
+                    }
+                    value.cells[4].innerHTML = NumSplitter(price + "");
+                    value.cells[5].innerHTML =
+                      price * toNumber(value.cells[2].innerHTML);
+                    cnt--;
+
+                    if (MaxPrice.length == 0) {
+                      MaxPrice[0] = itemName;
+                      MaxPrice[1] = price;
+                    } else {
+                      if (MaxPrice[1] < price) MaxPrice = [itemName, price];
+                    }
+                    if (cnt == 0) recalculate();
+                  });
               }
-              if (cnt == 0) recalculate();
             });
-          }
-        });
-      }
+        }
+      });
     });
-  });
 });
 
 function getRandomInt(min, max) {
@@ -217,7 +217,7 @@ function recalculate() {
       let sumString = $("#sum-names").html(summ.numberToString(true));
     }
   });
-  document.title = date + " "+(summ - realsumm) / 2 + " руб " + " № " + actNum + " " +MaxPrice[0];
+  document.title = date + " " + (summ - realsumm) / 2 + " руб " + " № " + actNum + " " + MaxPrice[0];
 };
 ///////////////////////////////////////////////////////////////////////// Сумма прописью /////////////
 function numberToString(_number, toUpper) {

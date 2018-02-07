@@ -9,7 +9,7 @@ let pricingEa = elId[1].getAttribute('selected');
 if (pricingEa == 'selected') {
   for (let i = 0; i < priceEa.length; i++) {
     let b = priceEa[i].innerText;
-    b = b.replace(' ','')
+    b = b.replace(' ', '')
     let c = b * 0.85;
     let d = roundR(c, 50);
     priceEa[i].innerText = d;

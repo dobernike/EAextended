@@ -1,4 +1,3 @@
-
 //let uel = document.getElementsByTagName('script')[0];
 //console.log(uel);
 //uel.remove();
@@ -66,15 +65,15 @@ function recalculate() {
       $("#result").text(summFull + "руб.");
 
       // result
-    
+
 
       let sumString = $("#sum-names").html(summ.numberToString(true));
-    
+
 
     }
   });
   NumberRise();
-  document.title = date + " "+(summ - realsumm) + " руб" + " № " + order + " " +MaxPrice[0];
+  document.title = date + " " + (summ - realsumm) + " руб" + " № " + order + " " + MaxPrice[0];
 }
 
 var logic = '<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>Накладная № {{order}}</title><style>table { font-size: 100%; border-collapse: collapse;border-spacing: none;}body { font-size: 10pt; font-family: Arial, Verdana, sans-serif;}h1 { margin : 0 }table#header { width: 100%; margin-bottom: 1ex }#header, #header h1, #pay_till { font-size: 14pt; font-weight: bold; }#pay_till { font-size: 14pt; text-align: right;}table#info {width: 100%;}td#course {text-align: right;font-weight: bold;font-size: 11pt;}ul#receiver, ul#receiver li { list-style-type: none; margin: 0; padding: 0; }body { padding: 1em; }ul {list-style-type: disc;margin: 2ex 1em;}table#order {width: 100%;}table#order td, table#order th {font-size: 9pt;border: 1px solid black;padding: 0.5ex 0.5em;}table#order td {text-align: right;}table#order td.item-name {text-align: left;}table#order tr.total td {border: none;font-weight: bold;}table#order td.units {text-align: center;}#sum-names {font-weight: bold;text-decoration: underline;}table#subscripts {width: 100%;}table#subscripts td {border-bottom: 1px solid black;width: 35%;}table#subscripts th {padding-left: 3em;text-align: left;}</style></head><body><table id="header"><tbody><tr><td><h1>Расходная накладная № {{order}} от {{date}}</h1></td><td id="pay_till"></td></tr></tbody></table><table id="info"><tbody><tr><td><ul id="receiver"><b><li>Адрес поставки: Стрельна, ул. Нижняя Колония, д. 49Б +79626803377</li> <li>Поставщик: Индивидуальный Предприниматель Федюшин П.Д.</li></b></ul></td></tr></tbody></table><table id="order"><thead><tr><th>№</th><th>Товар</th><th>Кол.</th><th>Ед.</th><th>Цена (руб)</th><th>Сумма (руб)</th></tr></thead><tbody>{{goods}}<tr class="total"><td colspan="5">Итого:</td><td>{{result}} </td></tr></tbody></table><p><p>Всего наименований <b id="columns"></b> на сумму <b id="result"></b></p></p><p id="sum-names">{{human_result}}</p><table id="subscripts"><tbody><tr><th>Отпустил</th><td>&nbsp;</td><th>Получил</th><td>&nbsp;</td></tr></tbody></table></body></html>';
@@ -101,50 +100,50 @@ function genRow(res) {
     var url = "https://euroauto.ru/search/" + art.replace(".", "");
 
     //$.get(url, function (data) {
-      fetch(url).then((resp) => resp.text())
-      .then(function(data){
-      var price = data.match(
-        /(<span .*price_num_real.*>|<span .* itemprop="price".*>)(.*?)<\/span>/
-      );
+    fetch(url).then((resp) => resp.text())
+      .then(function (data) {
+        var price = data.match(
+          /(<span .*price_num_real.*>|<span .* itemprop="price".*>)(.*?)<\/span>/
+        );
 
-      if (price) {
-        price = price[2].replace(" ", "");
+        if (price) {
+          price = price[2].replace(" ", "");
 
-        // if (itemName.toLowerCase().indexOf("масло") > -1) {
-        //   price = roundDown(toNumber(price));
-        //  } else {
-        //   price = toNumber(price);
-        // }
+          // if (itemName.toLowerCase().indexOf("масло") > -1) {
+          //   price = roundDown(toNumber(price));
+          //  } else {
+          //   price = toNumber(price);
+          // }
 
-        var totalPrice = price * count;
-        price = totalPrice / count;
+          var totalPrice = price * count;
+          price = totalPrice / count;
 
-        goods +=
-          '<tr><td>-1</td><td class="item-name">' +
-          firm +
-          " " +
-          art +
-          " " +
-          itemName +
-          "</td><td>" +
-          count +
-          '</td><td class="units">шт.</td><td> ' +
-          price +
-          " </td><td>" +
-          totalPrice +
-          " </td></tr>";
-        cnt--;
+          goods +=
+            '<tr><td>-1</td><td class="item-name">' +
+            firm +
+            " " +
+            art +
+            " " +
+            itemName +
+            "</td><td>" +
+            count +
+            '</td><td class="units">шт.</td><td> ' +
+            price +
+            " </td><td>" +
+            totalPrice +
+            " </td></tr>";
+          cnt--;
 
-        if (MaxPrice.length == 0) {
-          MaxPrice[0] = itemName;
-          MaxPrice[1] = price;
-        } else {
-          if (MaxPrice[1] < price) MaxPrice = [itemName, price];
+          if (MaxPrice.length == 0) {
+            MaxPrice[0] = itemName;
+            MaxPrice[1] = price;
+          } else {
+            if (MaxPrice[1] < price) MaxPrice = [itemName, price];
+          }
+
+          if (cnt == 0) recalculate();
         }
-
-        if (cnt == 0) recalculate();
-      }
-    });
+      });
   } else {
     cnt--;
     if (cnt == 0) recalculate();
@@ -156,9 +155,9 @@ $("document").ready(function () {
   var realsummt = $('span:contains("Итого:")')
     .html()
     .replace(" ", "").match(/(\d{1,16})/)[1];
-  
+
   realsumm = toNumber(realsummt);
-  
+
   cnt = $("td.currency:odd").length;
   order = $('span:contains("Заказ")')
     .text()
@@ -175,44 +174,44 @@ $("document").ready(function () {
   var doods = "";
   var url3 = "http://euroauto.ru/brand/";
 
-//  $.get(url3, function (dataDoods) {
+  //  $.get(url3, function (dataDoods) {
   fetch(url3).then((resp) => resp.text())
-  .then(function(dataDoods){
-    dataDoods = dataDoods.substring(0, dataDoods.indexOf("</select>"));
-    while ((rec = regr2.exec(dataDoods)) != null) {
-      if (rec[1] != "Все бренды") {
-        doods += rec[1] + "|";
+    .then(function (dataDoods) {
+      dataDoods = dataDoods.substring(0, dataDoods.indexOf("</select>"));
+      while ((rec = regr2.exec(dataDoods)) != null) {
+        if (rec[1] != "Все бренды") {
+          doods += rec[1] + "|";
+        }
       }
-    }
-    doods = doods
-      .replaceAll("(", "\\(")
-      .replaceAll(")", "\\)")
-      .replaceAll("/", "\\/");
+      doods = doods
+        .replaceAll("(", "\\(")
+        .replaceAll(")", "\\)")
+        .replaceAll("/", "\\/");
 
-    ////////////////////////////////// Brands ////////////////////////////////
-    /////////////////////////////////{{goods}}////////////////////////////////
+      ////////////////////////////////// Brands ////////////////////////////////
+      /////////////////////////////////{{goods}}////////////////////////////////
 
-    var row = $(".eaOptList tbody").html();
+      var row = $(".eaOptList tbody").html();
 
-    //var regx = /<tr>\s*?<td rowspan="2">\s(Great Wall|.*?)\s(.*?)<\/td>\s.*?<\/td>\s*<td>(.*?)<\/td>\s.*?>(\d*?)<\/td>/g;
+      //var regx = /<tr>\s*?<td rowspan="2">\s(Great Wall|.*?)\s(.*?)<\/td>\s.*?<\/td>\s*<td>(.*?)<\/td>\s.*?>(\d*?)<\/td>/g;
 
-    var regx = new RegExp(
-      '<tr>\\s*?<td rowspan="2">\\s(' +
-      doods +
-      ".*?)\\s(.*?)<\\/td>\\s*<td align.*>(.*?)</td>\\s*<td>(.*?)<\\/td>\\s*<td .*>(.*?)<\\/td>",
-      "g"
-    );
-    // <tr>\s*?<td rowspan="2">\s(.*?)\s(.*?)<\/td>\s*<td align.*>(.*?)<\/td>
-    // <tr>\\s*?<td rowspan="2">\\s(' +doods +".*?)\\s(.*?)<\\/td>\\s.*?<td\\salign=\"center\">(.*?)<\\/td>\\s.*?<\\/td>\\s*<td>(.*?)<\\/td>\\s.*?>(\\d*?)<\\/td>"
+      var regx = new RegExp(
+        '<tr>\\s*?<td rowspan="2">\\s(' +
+        doods +
+        ".*?)\\s(.*?)<\\/td>\\s*<td align.*>(.*?)</td>\\s*<td>(.*?)<\\/td>\\s*<td .*>(.*?)<\\/td>",
+        "g"
+      );
+      // <tr>\s*?<td rowspan="2">\s(.*?)\s(.*?)<\/td>\s*<td align.*>(.*?)<\/td>
+      // <tr>\\s*?<td rowspan="2">\\s(' +doods +".*?)\\s(.*?)<\\/td>\\s.*?<td\\salign=\"center\">(.*?)<\\/td>\\s.*?<\\/td>\\s*<td>(.*?)<\\/td>\\s.*?>(\\d*?)<\\/td>"
 
-    while ((ress = regx.exec(row)) != null) {
-      genRow(ress);
-    }
-  });
+      while ((ress = regx.exec(row)) != null) {
+        genRow(ress);
+      }
+    });
 });
 
 function finalise() {
-  
+
   ///replace///
   let logic1 = logic
     .replaceAll("{{order}}", order)
