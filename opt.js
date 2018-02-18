@@ -218,7 +218,7 @@ function recalculate() {
     }
   });
   document.title = date + " " + (summ - realsumm) / 2 + " руб " + " № " + actNum + " " + MaxPrice[0];
-};
+}
 ///////////////////////////////////////////////////////////////////////// Сумма прописью /////////////
 function numberToString(_number, toUpper) {
   var toUpper = toUpper || false;
