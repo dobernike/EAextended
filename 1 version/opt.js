@@ -29,7 +29,6 @@ function NumSplitter(str) {
     .join("");
 }
 
-
 function recalculate() {
   var rows = $("#order tbody tr");
   var summ = 0;
@@ -78,7 +77,6 @@ var realsumm = 0;
 var actNum = "";
 
 $("document").ready(function() {
-  
   var realsummt = $('td[colspan="5"]')
     .next()
     .html()
@@ -149,7 +147,10 @@ $("document").ready(function() {
         var art = mat[2];
         var firm = mat[1];
         var itemName = mat[3];
-        art = art.replaceAll(".", "").replaceAll("/", "").replaceAll("-","");
+        art = art
+          .replaceAll(".", "")
+          .replaceAll("/", "")
+          .replaceAll("-", "");
         var url = "https://euroauto.ru/searchnr/" + art;
         //  art.replace(".", "").replace("/", "");
         $.get(url, function(data) {
