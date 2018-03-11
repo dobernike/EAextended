@@ -5,4 +5,4 @@ console.log(rows);
 for (let i = 0; i < rows.length; i++) {
     const element = rows[i];
     console.log(element);
-}
+} 
