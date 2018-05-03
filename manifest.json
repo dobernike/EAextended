@@ -68,8 +68,8 @@
     },
     {
       "matches": [
-        "http://opt.euroauto.ru/?option=com_eaopt&task=invoice&invoice_from=*",
-        "http://opt.euroauto.ru/?option=com_eaopt&task=invoice&invoice_from=*"
+        "http://opt.euroauto.ru/?option=com_eaopt&task=invoice*",
+        "https://opt.euroauto.ru/?option=com_eaopt&task=invoice*"
       ],
       "js": ["invoice.js"],
       "run_at": "document_end"
