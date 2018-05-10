@@ -40,7 +40,7 @@ if (pricingEa == "selected" && priceEa.length > 0) {
     let cost = priceEa[i].cells[5].innerText;
     let url = "https://euroauto.ru/searchnr/" + art;
     let url2 = "https://euroauto.ru/firms/" + firm + "/" + art + "/";
-    22 - 132390;
+
     // cross xhr для выявления розничной цены
     fetch(url)
       .then(resp => resp.text())
