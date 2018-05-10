@@ -21,8 +21,7 @@
     "http://localhost/*"
   ],
 
-  "content_scripts": [
-    {
+  "content_scripts": [{
       "matches": [
         "http://opt.euroauto.ru/index.php?task=invoicePrint&option=com_eaopt&id=*",
         "http://opt.euroauto.ru/?task=invoicePrint&option=com_eaopt&id=*"
@@ -72,6 +71,13 @@
         "https://opt.euroauto.ru/?option=com_eaopt&task=invoice*"
       ],
       "js": ["invoice.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["http://euroauto.ru/raschet_stoimosti_rabot/*",
+        "https://euroauto.ru/raschet_stoimosti_rabot/*"
+      ],
+      "js": ["jquery-1.11.3.min.js", "workPrice.js"],
       "run_at": "document_end"
     }
   ]
