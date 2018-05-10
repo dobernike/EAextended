@@ -4,7 +4,7 @@
 //removeEventListener
 
 // old
-String.prototype.replaceAll = function(search, replace) {
+String.prototype.replaceAll = function (search, replace) {
   return this.split(search).join(replace);
 };
 
@@ -33,7 +33,7 @@ function NumSplitter(str) {
 
 function NumberRise() {
   var tds = $("#order tbody tr td:first-child");
-  $.each(tds, function(index, value) {
+  $.each(tds, function (index, value) {
     if (index + 1 != tds.length && value.getAttribute("colspan") != "5") {
       goodscount = index + 1;
       value.innerHTML = index + 1;
@@ -46,7 +46,7 @@ function recalculate() {
   finalise();
   var rows = $("#order tbody tr");
   var summ = 0;
-  $.each(rows, function(index, value) {
+  $.each(rows, function (index, value) {
     if (index != rows.length - 1) {
       summ = summ + toNumber(value.cells[5].innerHTML);
       value.cells[4].innerHTML = NumSplitter(value.cells[4].innerHTML);
@@ -98,9 +98,9 @@ function genRow(res) {
     var url = "https://euroauto.ru/search/" + art.replace(".", "");
 
     //$.get(url, function (data) {
-    fetch(url).then(resp => resp.text()).then(function(data) {
+    fetch(url).then(resp => resp.text()).then(function (data) {
       var price = data.match(
-        /(<span .*price_num_real.*>|<span .* itemprop="price".*>)(.*?)<\/span>/
+        /(<span .* itemprop="price".*>|<span .*price_num_real.*>)(.*\d)<\/span>/
       );
 
       if (price) {
@@ -147,7 +147,7 @@ function genRow(res) {
   }
 }
 
-$("document").ready(function() {
+$("document").ready(function () {
   var realsummt = $('span:contains("Итого:")')
     .html()
     .replace(" ", "")
@@ -168,7 +168,7 @@ $("document").ready(function() {
   var url3 = "http://euroauto.ru/brand/";
 
   //  $.get(url3, function (dataDoods) {
-  fetch(url3).then(resp => resp.text()).then(function(dataDoods) {
+  fetch(url3).then(resp => resp.text()).then(function (dataDoods) {
     dataDoods = dataDoods.substring(0, dataDoods.indexOf("</select>"));
     while ((rec = regr2.exec(dataDoods)) != null) {
       if (rec[1] != "Все бренды") {
@@ -189,8 +189,8 @@ $("document").ready(function() {
 
     var regx = new RegExp(
       '<tr>\\s*?<td rowspan="2">\\s(' +
-        doods +
-        ".*?)\\s(.*?)<\\/td>\\s*<td align.*>(.*?)</td>\\s*<td>(.*?)<\\/td>\\s*<td .*>(.*?)<\\/td>",
+      doods +
+      ".*?)\\s(.*?)<\\/td>\\s*<td align.*>(.*?)</td>\\s*<td>(.*?)<\\/td>\\s*<td .*>(.*?)<\\/td>",
       "g"
     );
     // <tr>\s*?<td rowspan="2">\s(.*?)\s(.*?)<\/td>\s*<td align.*>(.*?)<\/td>
@@ -380,9 +380,9 @@ function numberToString(_number, toUpper) {
   return _string.replace(/[\s]{1,}/g, " ");
 }
 
-Number.prototype.numberToString = function(toUpper) {
+Number.prototype.numberToString = function (toUpper) {
   return numberToString(this, toUpper);
 };
-String.prototype.numberToString = function(toUpper) {
+String.prototype.numberToString = function (toUpper) {
   return numberToString(this, toUpper);
 };

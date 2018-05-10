@@ -13,13 +13,13 @@ var MaxPrice = [];
 var realsumm = 0;
 var actNum = "";
 var date = "";
-$("document").ready(function() {
+$("document").ready(function () {
   date = $("h1").html().match(/(\d{2}).(\d{2}).(\d{4})/)[0];
 
   var realsummt = $('td[colspan="5"]').next().html().replace(" ", "");
   realsumm = toNumber(realsummt);
   //////////////////////DELETE/////////////////////////
-  $("tr td:first-child").click(function() {
+  $("tr td:first-child").click(function () {
     $(this).parent().remove();
 
     recalculate();
@@ -30,7 +30,7 @@ $("document").ready(function() {
   var url3 = "http://euroauto.ru/brand/";
 
   // $.get(url3, function (data) {
-  fetch(url3).then(resp => resp.text()).then(function(data) {
+  fetch(url3).then(resp => resp.text()).then(function (data) {
     data = data.substring(0, data.indexOf("</select>"));
     while ((rec = regr2.exec(data)) != null) {
       if (rec[1] != "Все бренды") {
@@ -63,7 +63,7 @@ $("document").ready(function() {
     var rows = $("#order tbody tr");
     var cnt = rows.length - 1;
 
-    $.each(rows, function(index, value) {
+    $.each(rows, function (index, value) {
       if (index != rows.length - 1) {
         var mat1 = value.cells[1];
         var regg = new RegExp("(" + doods + ".*?) (.*?) (.*?)$");
@@ -75,9 +75,9 @@ $("document").ready(function() {
         var url = "https://euroauto.ru/searchnr/" + art;
         //  art.replace(".", "").replace("/", "");
         //  $.get(url, function (data) {
-        fetch(url).then(resp => resp.text()).then(function(data) {
+        fetch(url).then(resp => resp.text()).then(function (data) {
           var price = data.match(
-            /(<span .* itemprop="price".*>|<span .*price_num_real.*>)(.*?)<\/span>/
+            /(<span .* itemprop="price".*>|<span .*price_num_real.*>)(.*\d)<\/span>/
           );
           if (price) {
             price = price[2].replace(" ", "");
@@ -102,9 +102,9 @@ $("document").ready(function() {
             var url2 = "https://euroauto.ru/firms/" + firm + "/" + art + "/";
 
             //       $.get(url2, function (data) {
-            fetch(url2).then(resp => resp.text()).then(function(data) {
+            fetch(url2).then(resp => resp.text()).then(function (data) {
               price = data.match(
-                /(<span .* itemprop="price".*>|<span .*price_num_real.*>)(.*?)<\/span>/
+                /(<span .* itemprop="price".*>|<span .*price_num_real.*>)(.*\d)<\/span>/
               );
 
               price = price[2].replace(" ", "");
@@ -138,7 +138,7 @@ function getRandomInt(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-String.prototype.replaceAll = function(search, replace) {
+String.prototype.replaceAll = function (search, replace) {
   return this.split(search).join(replace);
 };
 
@@ -170,7 +170,7 @@ function recalculate() {
   var summ = 0;
   var realsummt = $('td[colspan="5"]').next().html().replace(" ", "");
   realsumm = toNumber(realsummt);
-  $.each(rows, function(index, value) {
+  $.each(rows, function (index, value) {
     if (index != rows.length - 1) {
       summ = summ + toNumber(value.cells[5].innerHTML);
       value.cells[5].innerHTML = NumSplitter(value.cells[5].innerHTML);
@@ -184,10 +184,10 @@ function recalculate() {
       value.cells[1].innerHTML = NumSplitter(summ + "");
       $("p").html(
         "<p>Всего наименований " +
-          (rows.length - 1) +
-          " на сумму " +
-          NumSplitter(summ + "") +
-          " руб.</p>"
+        (rows.length - 1) +
+        " на сумму " +
+        NumSplitter(summ + "") +
+        " руб.</p>"
       );
       let sumString = $("#sum-names").html(summ.numberToString(true));
     }
@@ -363,9 +363,9 @@ function numberToString(_number, toUpper) {
   return _string.replace(/[\s]{1,}/g, " ");
 }
 
-Number.prototype.numberToString = function(toUpper) {
+Number.prototype.numberToString = function (toUpper) {
   return numberToString(this, toUpper);
 };
-String.prototype.numberToString = function(toUpper) {
+String.prototype.numberToString = function (toUpper) {
   return numberToString(this, toUpper);
 };
