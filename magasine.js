@@ -309,28 +309,6 @@ function numberToString(_number, toUpper) {
         _string = _string.replace("один ", "одна ");
         _string = _string.replace("два ", "две ");
         break;
-      case 2:
-        _num = _num.replace(/^[0]{1,}$/g, "0");
-        if (_num.length == 2 && parseFloat(_num.substr(0, 1)) == 1) {
-          _string += "миллионов ";
-          break;
-        }
-        var _last_num = parseFloat(_num.substr(-1));
-        if (_last_num == 1) _string += "миллион ";
-        else if (_last_num > 1 && _last_num < 5) _string += "миллиона ";
-        else if (parseFloat(_num) > 0) _string += "миллионов ";
-        break;
-      case 3:
-        _num = _num.replace(/^[0]{1,}$/g, "0");
-        if (_num.length == 2 && parseFloat(_num.substr(0, 1)) == 1) {
-          _string += "миллиардов ";
-          break;
-        }
-        var _last_num = parseFloat(_num.substr(-1));
-        if (_last_num == 1) _string += "миллиард ";
-        else if (_last_num > 1 && _last_num < 5) _string += "миллиарда ";
-        else if (parseFloat(_num) > 0) _string += "миллиардов ";
-        break;
     }
     return _string;
   }

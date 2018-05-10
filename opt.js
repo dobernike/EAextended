@@ -1,14 +1,3 @@
-// new
-/*
-console.log('test1');
-let el = $('.item-name');
-console.log(el);
-let el2 = el[1];
-console.log(el2);
-console.log("hiss12");
-*/
-// old
-
 var MaxPrice = [];
 var realsumm = 0;
 var actNum = "";
@@ -49,7 +38,7 @@ $("document").ready(function () {
 
     $(".total")[1].remove();
 
-    $("h1").html($("h1").html().replace("/2017", "").replace("Site-", ""));
+    $("h1").html($("h1").html().replace("/2016", "").replace("/2017", "").replace("/2018", "").replace("Site-", ""));
     $("h1").html($("h1").html().replace("16537", getRandomInt(10000, 100000)));
     actNum = $("h1").html().match(/.*№ (.*?) /)[1];
 
@@ -291,28 +280,6 @@ function numberToString(_number, toUpper) {
         else if (parseFloat(_num) > 0) _string += "тысяч ";
         _string = _string.replace("один ", "одна ");
         _string = _string.replace("два ", "две ");
-        break;
-      case 2:
-        _num = _num.replace(/^[0]{1,}$/g, "0");
-        if (_num.length == 2 && parseFloat(_num.substr(0, 1)) == 1) {
-          _string += "миллионов ";
-          break;
-        }
-        var _last_num = parseFloat(_num.substr(-1));
-        if (_last_num == 1) _string += "миллион ";
-        else if (_last_num > 1 && _last_num < 5) _string += "миллиона ";
-        else if (parseFloat(_num) > 0) _string += "миллионов ";
-        break;
-      case 3:
-        _num = _num.replace(/^[0]{1,}$/g, "0");
-        if (_num.length == 2 && parseFloat(_num.substr(0, 1)) == 1) {
-          _string += "миллиардов ";
-          break;
-        }
-        var _last_num = parseFloat(_num.substr(-1));
-        if (_last_num == 1) _string += "миллиард ";
-        else if (_last_num > 1 && _last_num < 5) _string += "миллиарда ";
-        else if (parseFloat(_num) > 0) _string += "миллиардов ";
         break;
     }
     return _string;
