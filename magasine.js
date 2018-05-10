@@ -1,9 +1,3 @@
-//let uel = document.getElementsByTagName('script')[0];
-//console.log(uel);
-//uel.remove();
-//removeEventListener
-
-// old
 String.prototype.replaceAll = function (search, replace) {
   return this.split(search).join(replace);
 };

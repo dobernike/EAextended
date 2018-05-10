@@ -1,14 +1,14 @@
 ﻿{
   "manifest_version": 2,
-  "name": "EAextend_beta_version",
-  "version": "1.1.1",
-  "description": "Автоматизация накладной22",
+  "name": "EAextend",
+  "version": "1.1.2",
+  "description": "Автоматизация накладной",
   "icons": {
     "48": "img/icon.png"
   },
 
   "browser_action": {
-    "default_title": "Автоматизация накладной11",
+    "default_title": "Автоматизация накладной",
     "default_icon": "img/icon.png",
     "default_popup": "popup.html"
   },

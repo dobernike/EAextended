@@ -3,11 +3,11 @@ var realsumm = 0;
 var actNum = "";
 var date = "";
 $("document").ready(function () {
-  date = $("h1").html().match(/(\d{2}).(\d{2}).(\d{4})/)[0];
+
 
   var realsummt = $('td[colspan="5"]').next().html().replace(" ", "");
   realsumm = toNumber(realsummt);
-  //////////////////////DELETE/////////////////////////
+  //////////////////////TODO: DELETE/////////////////////////
   $("tr td:first-child").click(function () {
     $(this).parent().remove();
 
@@ -41,6 +41,7 @@ $("document").ready(function () {
     $("h1").html($("h1").html().replace("/2016", "").replace("/2017", "").replace("/2018", "").replace("Site-", ""));
     $("h1").html($("h1").html().replace("16537", getRandomInt(10000, 100000)));
     actNum = $("h1").html().match(/.*№ (.*?) /)[1];
+    date = $("h1").html().match(/(\d{2}).(\d{2}).(\d{4})/)[0];
 
     $("#pay_till").html('<svg id="barcode"></svg>');
     JsBarcode("#barcode", actNum, {
