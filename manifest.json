@@ -77,7 +77,7 @@
       "matches": ["http://euroauto.ru/raschet_stoimosti_rabot/*",
         "https://euroauto.ru/raschet_stoimosti_rabot/*"
       ],
-      "js": ["jquery-1.11.3.min.js", "workPrice.js"],
+      "js": ["source/jquery-1.11.3.min.js", "workPrice.js"],
       "run_at": "document_end"
     }
   ]
