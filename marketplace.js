@@ -9,8 +9,6 @@ if (pricingEa == "selected") {
     let price = priceEa[i].innerText;
     price = price.replace(" ", "");
 
-    console.log(itemName);
-
     if (itemName.toLowerCase().indexOf("масло") > -1) {
       priceEa[i].innerText = roundDown(price, 100);
     } else {
