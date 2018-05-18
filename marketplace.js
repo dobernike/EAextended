@@ -4,11 +4,22 @@ let pricingEa = elId[1].getAttribute("selected");
 
 if (pricingEa == "selected") {
   for (let i = 0; i < priceEa.length; i++) {
-    let b = priceEa[i].innerText;
-    b = b.replace(" ", "");
-    let c = b * 0.85;
-    let d = roundR(c, 50);
-    priceEa[i].innerText = d;
+    var itemName = priceEa[i].previousElementSibling.previousElementSibling.innerHTML;
+    itemName = itemName.replace(/ .*/, '');
+    let price = priceEa[i].innerText;
+    price = price.replace(" ", "");
+
+    console.log(itemName);
+
+    if (itemName.toLowerCase().indexOf("масло") > -1) {
+      priceEa[i].innerText = roundDown(price, 100);
+    } else {
+      let c = price * 0.85;
+      let d = roundR(c, 50);
+      priceEa[i].innerText = d;
+    }
+
+
   }
 } else {
   alert('Выбери "ЕА розница"!');
@@ -16,4 +27,12 @@ if (pricingEa == "selected") {
 
 function roundR(num, precision) {
   return Math.round(num / precision) * precision;
+}
+
+function roundDown(num, precision) {
+  return Math.floor(num / precision) * precision;
+}
+
+function toNumber(string) {
+  return parseFloat(string.replace(",", "."));
 }
