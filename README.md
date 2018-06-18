@@ -7,7 +7,7 @@ In future Opera, Yandex browser, EDGE and last IE, Electron and React.Native
 
     Euroauto
 
-Подсчет стоимости работ
+Подсчет стоимости работ +
 Переход в amtel при необходимости
 
     amtel

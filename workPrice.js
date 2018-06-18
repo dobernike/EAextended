@@ -28,22 +28,18 @@ for (let i = 0; i < button.length; i++) {
 }
 
 
-function someOtherFunction() { // перезапишет существующий обработчик
+function someOtherFunction() {
   // if (document.getElementById('emptyWorkList')) {
-  document.location.reload(true);
+  document.location.reload( /*true*/ );
   // } else {
-
   //   console.log('else');
   //   //totalArray.length = 1;
   //   console.log(totalArray);
   //   console.log(rows2);
   //   getPrice(rows2, false);
   // }
-  // выведется только это
   //  }
 }
-//document.location.reload(true);
-
 //functions
 function getPrice(array) {
   array.forEach(value => {
