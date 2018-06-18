@@ -45,35 +45,31 @@ function someOtherFunction() { // перезапишет существующи�
 //document.location.reload(true);
 
 //functions
-function getPrice(array, rnd = true) {
+function getPrice(array) {
   array.forEach(value => {
     if (value.cells[1]) {
       el = value.cells[1].textContent.replace(' ', '');
       el2 = parseInt(el);
-      if (rnd == true) {
-        if (el2 >= 30000) {
-          el3 = roundDown(el2, 7000);
-        } else if (el2 >= 20000) {
-          el3 = roundDown(el2, 5000);
-        } else if (el2 >= 13000) {
-          el3 = roundDown(el2, 4000);
-        } else if (el2 >= 8000) {
-          el3 = roundDown(el2, 2000);
-        } else if (el2 >= 4500) {
-          el3 = roundDown(el2, 1500);
-        } else if (el2 >= 3000) {
-          el3 = roundDown(el2, 800);
-        } else if (el2 >= 1500) {
-          el3 = roundDown(el2, 500);
-        } else if (el2 >= 900) {
-          el3 = roundDown(el2, 300);
-        } else if (el2 >= 500) {
-          el3 = roundDown(el2, 150);
-        } else if (el2 >= 250) {
-          el3 = roundDown(el2, 50);
-        } else {
-          el3 = el2;
-        }
+      if (el2 >= 30000) {
+        el3 = roundDown(el2, 7000);
+      } else if (el2 >= 20000) {
+        el3 = roundDown(el2, 5000);
+      } else if (el2 >= 13000) {
+        el3 = roundDown(el2, 4000);
+      } else if (el2 >= 8000) {
+        el3 = roundDown(el2, 2000);
+      } else if (el2 >= 4500) {
+        el3 = roundDown(el2, 1500);
+      } else if (el2 >= 3000) {
+        el3 = roundDown(el2, 800);
+      } else if (el2 >= 1500) {
+        el3 = roundDown(el2, 500);
+      } else if (el2 >= 900) {
+        el3 = roundDown(el2, 300);
+      } else if (el2 >= 500) {
+        el3 = roundDown(el2, 150);
+      } else if (el2 >= 250) {
+        el3 = roundDown(el2, 50);
       } else {
         el3 = el2;
       }
