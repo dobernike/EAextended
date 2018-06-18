@@ -1,0 +1,84 @@
+﻿{
+  "manifest_version": 2,
+  "name": "EAextend",
+  "version": "1.1.2",
+  "description": "Автоматизация накладной",
+  "icons": {
+    "48": "img/icon.png"
+  },
+
+  "browser_action": {
+    "default_title": "Автоматизация накладной",
+    "default_icon": "img/icon.png",
+    "default_popup": "popup.html"
+  },
+
+  "permissions": [
+    "tabs",
+    "storage",
+    "https://euroauto.ru/*",
+    "http://euroauto.ru/*",
+    "http://localhost/*"
+  ],
+
+  "content_scripts": [{
+      "matches": [
+        "http://opt.euroauto.ru/index.php?task=invoicePrint&option=com_eaopt&id=*",
+        "http://opt.euroauto.ru/?task=invoicePrint&option=com_eaopt&id=*"
+      ],
+      "js": [
+        "source/jquery-1.11.3.min.js",
+        "opt.js",
+        "source/JsBarcode.all.min.js"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "http://opt.euroauto.ru/index.php?option=com_eaopt&task=searchByOrigGrup&other_wh=0&orig_grup=*",
+        "https://opt.euroauto.ru/index.php?option=com_eaopt&task=searchByOrigGrup&other_wh=0&orig_grup=**"
+      ],
+      "js": ["marketplace.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "http://opt.euroauto.ru/proposal/?option=com_eaopt&task=basket*",
+        "http://opt.euroauto.ru/?option=com_eaopt&task=basket*",
+        "https://opt.euroauto.ru/proposal/?option=com_eaopt&task=basket*",
+        "https://opt.euroauto.ru/?option=com_eaopt&task=basket*",
+        "http://opt.euroauto.ru/index.php?option=com_eaopt&task=basket*",
+        "https://opt.euroauto.ru/index.php?option=com_eaopt&task=basket*"
+      ],
+      "js": ["basket.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "http://opt.euroauto.ru/lib/basketnkprint.php?nkid=*",
+        "https://opt.euroauto.ru/lib/basketnkprint.php?nkid=*"
+      ],
+      "js": [
+        "source/jquery-1.11.3.min.js",
+        "magasine.js",
+        "source/JsBarcode.all.min.js"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "http://opt.euroauto.ru/?option=com_eaopt&task=invoice*",
+        "https://opt.euroauto.ru/?option=com_eaopt&task=invoice*"
+      ],
+      "js": ["invoice.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["http://euroauto.ru/raschet_stoimosti_rabot/*",
+        "https://euroauto.ru/raschet_stoimosti_rabot/*"
+      ],
+      "js": ["source/jquery-1.11.3.min.js", "workPrice.js"],
+      "run_at": "document_end"
+    }
+  ]
+}
