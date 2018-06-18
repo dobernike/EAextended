@@ -6,8 +6,8 @@ const elem4 = document.getElementsByClassName('target_zapis_na_sto')[0].remove()
 const rows = document.querySelectorAll('#costOfWorkList tbody tr');
 const rows2 = document.querySelectorAll('#workListSelected tbody tr');
 const button = document.getElementsByClassName('target-add-work');
-
-button1 = button[0]
+const buttonRemove = document.getElementsByClassName('btn-primary');
+console.log(buttonRemove);
 let totalArray = [];
 
 getPrice(rows);
@@ -24,23 +24,17 @@ if (totalArray.length != 0) {
 
 for (let i = 0; i < button.length; i++) {
   button[i].addEventListener("click", someOtherFunction);
-
 }
 
-
-function someOtherFunction() {
-  // if (document.getElementById('emptyWorkList')) {
-  document.location.reload( /*true*/ );
-  // } else {
-  //   console.log('else');
-  //   //totalArray.length = 1;
-  //   console.log(totalArray);
-  //   console.log(rows2);
-  //   getPrice(rows2, false);
-  // }
-  //  }
+for (let i = 1; i < buttonRemove.length; i++) {
+  buttonRemove[i].addEventListener("click", someOtherFunction);
 }
+
 //functions
+function someOtherFunction() {
+  document.location.reload( /*true*/ )
+}
+
 function getPrice(array) {
   array.forEach(value => {
     if (value.cells[1]) {
