@@ -1,7 +1,4 @@
 # EAextended
-<<<<<<< HEAD
-This extenshen for google chrome and firefox. In future Opera, Yandex browser, EDGE and last IE
-=======
 
 This extenshen for google chrome and firefox.
 In future Opera, Yandex browser, EDGE and last IE, Electron and React.Native
@@ -91,4 +88,3 @@ empty
 # Определение данных с фотографии (текс, номера, заказ) и постановка таска в трелло.
 
 # Из трелло автоматический заказ, если данных не undefined
->>>>>>> developer
