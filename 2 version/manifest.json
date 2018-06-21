@@ -59,9 +59,9 @@
         "https://opt.euroauto.ru/lib/basketnkprint.php?nkid=*"
       ],
       "js": [
+        "source/JsBarcode.all.min.js",
         "source/jquery-1.11.3.min.js",
-        "magasine.js",
-        "source/JsBarcode.all.min.js"
+        "magasine.js"
       ],
       "run_at": "document_end"
     },
