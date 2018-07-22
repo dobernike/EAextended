@@ -32,6 +32,12 @@
       "matches": ["https://amtel.club/cabinet/history/lc*"],
       "js": ["historyOpt.js"],
       "run_at": "document_end"
+    },
+    {
+      "matches": ["https://amtel.club/search/*"],
+      "js": ["search.js"],
+      "run_at": "document_end"
     }
+
   ]
 }
