@@ -37,7 +37,13 @@
       "matches": ["https://amtel.club/search/*"],
       "js": ["search.js"],
       "run_at": "document_end"
+    },
+    {
+      "matches": ["https://amtel.club/cart/*"],
+      "js": ["basket.js"],
+      "run_at": "document_end"
     }
+
 
   ]
 }
