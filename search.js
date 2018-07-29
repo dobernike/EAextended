@@ -5,9 +5,9 @@ if (profile == 'Продавец ') {
     var setIntervalId = setInterval(function () {
 
         var h3 = document.getElementsByTagName('h3')[0];
-
+        // Подгрузка всего контента
         if (h3 && h3.innerText === 'Основной склад') {
-
+            // Основной склад
             clearInterval(setIntervalId);
 
             var opt = document.getElementsByClassName('old-listing-group')[0];
@@ -16,8 +16,9 @@ if (profile == 'Продавец ') {
             itemName = itemName.match(/\Масло/);
             var info = opt.getElementsByClassName('fa fa-info-circle');
 
-            for (var i = 0; i < price.length; i++) {
 
+            for (var i = 0; i < price.length; i++) {
+                info[i].setAttribute('style', 'color:green');
                 var eaPrice = Number(price[i].getAttribute('data-price-ea').replace(' ', ''));
                 var optPrice = Number(price[i].getAttribute('data-price-opt').replace(' ', ''));
                 // console.log(typeof eaPrice);
@@ -36,9 +37,48 @@ if (profile == 'Продавец ') {
                     // console.log('newPrice : ' + newPrice);
                 }
                 var profit = Number(price[i].innerText) - optPrice;
-                console.log('Прибыль = ' + profit);
+                // console.log('Прибыль = ' + profit);
+                info[i].innerText = ' ' + profit;
 
             }
+
+            // Розница
+            var setIntervalId2 = setInterval(function () {
+
+                var h3Roznica = document.getElementsByTagName('h3')[1];
+                // console.log(h3Roznica);
+                if (h3Roznica && h3Roznica.innerText === 'Розничная сеть') {
+                    clearInterval(setIntervalId2);
+
+                    var retail = document.getElementById('block-content-ldc');
+                    var priceRetail = retail.getElementsByClassName('old-appraise-item-price');
+                    var divOldPrice = retail.getElementsByClassName('old-appraise-item-retail-price');
+                    var originalRetailPrice = retail.getElementsByClassName('old-appraise-item-retail-price-num');
+                    var itemNameRetail = retail.getElementsByClassName('old-appraise-item-description')[1].innerText;
+                    itemNameRetail = itemNameRetail.match(/\Масло/);
+                    var infoRetail = retail.getElementsByClassName('fa fa-info-circle');
+                    var profitRetail = 0;
+
+                    for (var j = 0; j < priceRetail.length; j++) {
+                        var clearPriceRetail = priceRetail[j].innerText.replace(' a', '');
+                        var clearOriginalRetailPrice = originalRetailPrice[j].innerText.replace(' a ', '');
+                        infoRetail[j].setAttribute('style', 'color:green');
+                        //  console.log(clearPriceRetail);
+                        //  console.log(clearOriginalRetailPrice);
+                        if (Number(clearOriginalRetailPrice) != 0) {
+                            profitRetail = Number(clearOriginalRetailPrice) - Number(clearPriceRetail);
+                            priceRetail[j].innerText = clearOriginalRetailPrice;
+                        } else {
+                            profitRetail = 0;
+                            priceRetail[j].innerText = Number(clearPriceRetail);
+                        }
+                        // console.log('Прибыль = ' + profitRetail);
+                        infoRetail[j].innerText = ' ' + profitRetail;
+                    }
+
+                }
+
+            }, 100);
 
         }
 
