@@ -60,11 +60,11 @@ if (profile == 'Продавец ') {
                     var profitRetail = 0;
 
                     for (var j = 0; j < priceRetail.length; j++) {
-                        var clearPriceRetail = priceRetail[j].innerText.replace(' a', '');
-                        var clearOriginalRetailPrice = originalRetailPrice[j].innerText.replace(' a ', '');
+                        var clearPriceRetail = priceRetail[j].innerText.replace(' a', '').replace(' ', '');
+                        var clearOriginalRetailPrice = originalRetailPrice[j].innerText.replace(' a ', '').replace(' ', '');
                         infoRetail[j].setAttribute('style', 'color:green');
-                        //  console.log(clearPriceRetail);
-                        //  console.log(clearOriginalRetailPrice);
+                        console.log(clearPriceRetail);
+                        console.log(clearOriginalRetailPrice);
                         if (Number(clearOriginalRetailPrice) != 0) {
                             profitRetail = Number(clearOriginalRetailPrice) - Number(clearPriceRetail);
                             priceRetail[j].innerText = clearOriginalRetailPrice;
@@ -72,7 +72,7 @@ if (profile == 'Продавец ') {
                             profitRetail = 0;
                             priceRetail[j].innerText = Number(clearPriceRetail);
                         }
-                        // console.log('Прибыль = ' + profitRetail);
+                        console.log('Прибыль = ' + profitRetail);
                         infoRetail[j].innerText = ' ' + profitRetail;
                     }
 
