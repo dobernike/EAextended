@@ -18,7 +18,9 @@
     "storage",
     "https://euroauto.ru/*",
     "http://euroauto.ru/*",
-    "http://localhost/*"
+    "http://localhost/*",
+    "https://amtel.club/*",
+    "http://amtel.club/*"
   ],
 
   "content_scripts": [{
