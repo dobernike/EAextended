@@ -1,18 +1,16 @@
-let profile = document.getElementsByClassName('dropdown-toggle')[1].innerText;
+let profile = document.getElementsByClassName("dropdown-toggle")[1].innerText;
 
-if (profile == 'Продавец ') {
+if (profile == "Продавец ") {
+  let div = document.getElementsByTagName("hr")[0].nextElementSibling;
 
-  let div = document.getElementsByTagName('hr')[0].nextElementSibling;
-
-  if (div.getAttribute('style') == 'display: none') {
-
+  if (div.getAttribute("style") == "display: none") {
     /**
      *  Корзина: Основной склад
      **/
 
     let priceEa = document.getElementsByClassName("cart-store-brand");
-    console.log(priceEa);
-    let price = document.getElementsByClassName('cart-store-price-value');
+    // console.log(priceEa);
+    let price = document.getElementsByClassName("cart-store-price-value");
     // let x = 0;
     // let price;
     // let realSumm = document
@@ -44,7 +42,7 @@ if (profile == 'Продавец ') {
       let itemName = priceEa[i].nextElementSibling.innerText;
 
       // Временный костыль для розницы
-      if (itemName == 'Новый') {
+      if (itemName == "Новый") {
         itemName = priceEa[i].nextElementSibling.nextElementSibling.innerText;
       }
       let cost = price[i].innerText;
@@ -62,9 +60,9 @@ if (profile == 'Продавец ') {
       // cross xhr для выявления розничной цены
       fetch(url)
         .then(resp => resp.text())
-        .then(function (data) {
+        .then(function(data) {
           // console.log("request succeeded with JSON response");
-          console.log(itemName);
+          //  console.log(itemName);
           let price = data.match(
             /<div.class="num-from-block main-store">.*\W.*<div.class="num-price">(\d.*)/
           );
@@ -77,34 +75,33 @@ if (profile == 'Продавец ') {
 
           price = price[1].replace(" ", "");
 
-          if (itemName == 'Масло') {
-            console.log('good');
+          if (itemName == "Масло") {
+            console.log("good");
             price = roundDown(price, 50);
           } else {
-            console.log('bad');
+            console.log("bad");
             // Устанавливается скидка 15%
             price = roundUp(price * 0.85, 50);
           }
+          console.log(cost);
           console.log(price);
-        }).catch(function (error) {
-          console.log('There has been a problem with your fetch operation: ' + error.message);
+        })
+        .catch(function(error) {
+          console.log(
+            "There has been a problem with your fetch operation: " +
+              error.message
+          );
         });
     }
   } else {
-    console.log('Добавь товары в корзину');
+    console.log("Добавь товары в корзину");
   }
 } else {
-  console.log('Включи продавец');
+  console.log("Включи продавец");
 }
 //===============================================//
 
-
-
-
-
-
-
-//        
+//
 //           // Заменяется цена и сумма на скидочную
 //           priceEa[i].cells[5].innerText = price;
 //           priceEa[i].cells[7].innerText = price * priceEa[i].cells[6].innerText;
