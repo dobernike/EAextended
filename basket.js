@@ -10,7 +10,10 @@ if (profile == "Продавец ") {
 
     let priceEa = document.getElementsByClassName("cart-store-brand");
     // console.log(priceEa);
-    let price = document.getElementsByClassName("cart-store-price-value");
+    let priceOpt = document.getElementsByClassName("cart-store-price-value");
+    let summ = 0;
+    let cnt = 0;
+
     // let x = 0;
     // let price;
     // let realSumm = document
@@ -35,22 +38,25 @@ if (profile == "Продавец ") {
     //       timeout = 5000;
     //   }
     // var itemName = '';
+
     for (let i = 0; i < priceEa.length; i++) {
       // console.log(priceEa[i]);
       let firm = priceEa[i].innerText;
       let art = priceEa[i].previousElementSibling.innerText;
-      let itemName = priceEa[i].nextElementSibling.innerText;
-
+      let itemName = priceEa[i].nextElementSibling;
+      let itemProp = itemName.innerText;
       // Временный костыль для розницы
-      if (itemName == "Новый") {
-        itemName = priceEa[i].nextElementSibling.nextElementSibling.innerText;
+      if (itemName.innerText == "Новый") {
+        itemName = priceEa[i].nextElementSibling.nextElementSibling;
+
       }
-      let cost = price[i].innerText;
+      let cost = priceOpt[i].innerText;
       // console.log(firm);
       // console.log(art);
       // console.log(itemName);
       // console.log(cost);
-      itemName = itemName.match(/\Масло/);
+      let itemNameOil = itemName.innerText;
+      itemNameOil = itemNameOil.match(/\Масло/);
       //  console.log(itemName);
 
       let url = "https://euroauto.ru/searchnr/" + art;
@@ -60,39 +66,81 @@ if (profile == "Продавец ") {
       // cross xhr для выявления розничной цены
       fetch(url)
         .then(resp => resp.text())
-        .then(function(data) {
+        .then(function (data) {
           // console.log("request succeeded with JSON response");
           //  console.log(itemName);
           let price = data.match(
-            /<div.class="num-from-block main-store">.*\W.*<div.class="num-price">(\d.*)/
+            /<span\W*itemprop="price"\W*content=".*">(\d.*)<\/span><span itemprop="priceCurrency" content="RUB">руб.<\/span>/m
+            // /<div.class="num-from-block main-store">.*\W.*<div.class="num-price">(\d.*)/
           );
+          //console.log(data);
+          //console.log(price);
 
           if (!price) {
             price = data.match(
               /<div.class="text-left btn btn-default active">\W.*\W.*\W.*\W.*<span.class="price">(\d.*)<\/span>.*<\/span>/
             );
           }
-
+          //console.log('cost is: ' + cost);
           price = price[1].replace(" ", "");
-
-          if (itemName == "Масло") {
-            console.log("good");
-            price = roundDown(price, 50);
+          // console.log('price is: ' + price);
+          var newPrice = 0;
+          //  console.log(itemName.previousSibling.innerText);
+          if (itemNameOil == "Масло") {
+            //console.log("good");
+            newPrice = roundDown(price, 50);
+          } else if (itemProp == "Новый") {
+            // console.log('good');
+            newPrice = price;
           } else {
-            console.log("bad");
+            // console.log("bad");
             // Устанавливается скидка 15%
-            price = roundUp(price * 0.85, 50);
+            newCurentPrice = roundUp(price * 0.85, 50);
+            var newFixedPrice = roundDown(price, 50);
+            if (newCurentPrice > cost) {
+              newPrice = newCurentPrice;
+            } else if (newFixedPrice > cost) {
+              newPrice = newFixedPrice;
+            }
           }
-          console.log(cost);
-          console.log(price);
+
+          priceOpt[i].innerText = newPrice;
+          summ += Number(newPrice);
+          return summ;
+          //  console.log('new is: ' + newPrice);
+        }).then(function (summ) {
+          cnt += 1;
+          if (cnt == priceEa.length) {
+            let total = document.getElementsByClassName('cart-store-total-sum-value');
+            let totalsum = 0;
+            let deliveryPrice = document.getElementsByClassName('delivery-price');
+            for (let j = 0; j < total.length; j++) {
+              totalsum += Number(total[j].innerText);
+              // console.log(totalsum);
+              totalsum += Number(deliveryPrice[j].innerText);
+            }
+            let sklad = '';
+            if (total.length > 1) {
+              sklad = " | " + total.length + " точки";
+            }
+            total[0].innerText = summ + sklad + " | Прибыль: " + (roundUp((summ - totalsum) / 2, 50));
+            console.log(summ);
+            console.log(totalsum);
+            console.log(summ - totalsum);
+            // console.log(totalsum);
+            //  console.log(summ);
+            // document.getElementsByClassName('cart-store-total-sum-value')[0].innerText
+          }
         })
-        .catch(function(error) {
+        .catch(function (error) {
           console.log(
             "There has been a problem with your fetch operation: " +
-              error.message
+            error.message
           );
+          //  alert('Включи mixed content');
         });
     }
+    // console.log(summ);
   } else {
     console.log("Добавь товары в корзину");
   }
