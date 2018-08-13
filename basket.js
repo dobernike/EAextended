@@ -48,7 +48,6 @@ if (profile == "Продавец ") {
       // Временный костыль для розницы
       if (itemName.innerText == "Новый") {
         itemName = priceEa[i].nextElementSibling.nextElementSibling;
-
       }
       let cost = priceOpt[i].innerText;
       // console.log(firm);
@@ -95,7 +94,7 @@ if (profile == "Продавец ") {
           } else {
             // console.log("bad");
             // Устанавливается скидка 15%
-            newCurentPrice = roundUp(price * 0.85, 50);
+            var newCurentPrice = round(price * 0.85, 50);
             var newFixedPrice = roundDown(price, 50);
             if (newCurentPrice > cost) {
               newPrice = newCurentPrice;
@@ -103,33 +102,88 @@ if (profile == "Продавец ") {
               newPrice = newFixedPrice;
             }
           }
-
+          priceOpt[i].setAttribute('style', 'color: #337ab7;');
           priceOpt[i].innerText = newPrice;
-          summ += Number(newPrice);
-          return summ;
           //  console.log('new is: ' + newPrice);
-        }).then(function (summ) {
+        })
+        .then(function () {
           cnt += 1;
           if (cnt == priceEa.length) {
-            let total = document.getElementsByClassName('cart-store-total-sum-value');
-            let totalsum = 0;
-            let deliveryPrice = document.getElementsByClassName('delivery-price');
-            for (let j = 0; j < total.length; j++) {
-              totalsum += Number(total[j].innerText);
-              // console.log(totalsum);
-              totalsum += Number(deliveryPrice[j].innerText);
+
+            let cartStoreWraps = document.getElementsByClassName(
+              "cart-store-wrap"
+            );
+
+            for (let j = 0; j < cartStoreWraps.length; j++) {
+
+              let cartStoreWrap = cartStoreWraps[j];
+              // Основной склад
+              if (
+                cartStoreWrap.getAttribute("data-url-history") ===
+                "/cabinet/history/lc"
+              ) {
+
+                let cartStoreWrapOptSum = 0;
+                // console.log("good");
+                //console.log(cartStoreWrap);
+                let cartStoreWrapItem = cartStoreWrap.getElementsByClassName(
+                  "cart-store-item-wrap"
+                );
+                let cartStoreWrapOptOriginalSum = cartStoreWrapItem[cartStoreWrapItem.length - 1].getElementsByClassName('cart-store-total-sum-value')[0].innerText;
+                // console.log(cartStoreWrapOptOriginalSum);
+
+                for (let k = 0; k < cartStoreWrapItem.length - 1; k++) {
+
+                  let cartStoreWrapItemPrice = cartStoreWrapItem[
+                      k
+                    ].getElementsByClassName("cart-store-price-value")[0]
+                    .innerText;
+                  // console.log(cartStoreWrapItemPrice);
+                  cartStoreWrapOptSum += Number(cartStoreWrapItemPrice);
+
+                }
+                let deliveryOpt = '';
+
+                if (cartStoreWrapOptSum < 3000) {
+                  deliveryOpt = ' c доставой';
+                  cartStoreWrapOptSum += 300;
+
+                }
+
+                let profitOpt = Number(cartStoreWrapOptSum) - Number(cartStoreWrapOptOriginalSum);
+                // console.log(cartStoreWrapOptSum);
+
+                // console.log('profit: ' + profitOpt);
+                let profitOptCeil = roundUp(profitOpt / 2, 50);
+                cartStoreWrapItem[cartStoreWrapItem.length - 1].getElementsByClassName('cart-store-total-sum-value')[0].innerText = cartStoreWrapOptSum + ' руб ' + deliveryOpt + ' | Прибыль: ' + profitOptCeil;
+              } else {
+                // Остальные склады
+              }
             }
-            let sklad = '';
-            if (total.length > 1) {
-              sklad = " | " + total.length + " точки";
-            }
-            total[0].innerText = summ + sklad + " | Прибыль: " + (roundUp((summ - totalsum) / 2, 50));
-            console.log(summ);
-            console.log(totalsum);
-            console.log(summ - totalsum);
+            // let total = document.getElementsByClassName(
+            //   "cart-store-total-sum-value"
+            // );
+            // let totalsum = 0;
+            // let deliveryPrice = document.getElementsByClassName(
+            //   "delivery-price"
+            // );
+            // for (let j = 0; j < total.length; j++) {
+            //   totalsum += Number(total[j].innerText);
+
+            //   totalsum += Number(deliveryPrice[j].innerText);
+            // }
+            // let sklad = "";
+            // if (total.length > 1) {
+            //   sklad = " | " + total.length + " точки";
+            // }
+            // let totalprofits = Number(summ) - Number(totalsum);
+            // let totalprofit = roundUp(totalprofits / 2, 50);
+            // console.log("totalprofits: " + totalprofits);
+            // console.log("totalprofit: " + totalprofit);
+            // total[0].innerText = summ + sklad + " | Прибыль: " + totalprofit;
+            // console.log(summ);
             // console.log(totalsum);
-            //  console.log(summ);
-            // document.getElementsByClassName('cart-store-total-sum-value')[0].innerText
+            // console.log(summ - totalsum);
           }
         })
         .catch(function (error) {
@@ -222,8 +276,12 @@ if (profile == "Продавец ") {
 //   return parseFloat(string.replace(",", "."));
 // }
 
-function roundUp(num, precision) {
+function round(num, precision) {
   return Math.round(num / precision) * precision;
+}
+
+function roundUp(num, precision) {
+  return Math.ceil(num / precision) * precision;
 }
 
 function roundDown(num, precision) {
