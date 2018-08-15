@@ -5,17 +5,13 @@ In future Opera, Yandex browser, EDGE and last IE, Electron and React.Native
 
 ## Issue
 
-http://euroauto.ru/firms/all/la228/  в корзине выдает ошибку
-
-Добавить красным цены, которые не прошли fetch в корзине
-
-Убрать undefined (бесконечный) на розница серч.
+http://euroauto.ru/firms/all/la228/ и https://amtel.club/search/333311 в корзине выдает ошибку
 
 # TODO:
 
     Euroauto
 
-Подсчет стоимости работ +
+Подсчет стоимости работ (+)
 Переход в amtel при необходимости
 
     amtel

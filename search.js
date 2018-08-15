@@ -5,7 +5,7 @@ if (profile == 'Продавец ') {
     var setIntervalId = setInterval(function () {
 
         var h3 = document.getElementsByTagName('h3')[0];
-        console.log(h3);
+        //  console.log(h3);
         // Подгрузка всего контента
         if (h3 && h3.innerText === 'Основной склад') {
             // Основной склад
@@ -56,7 +56,7 @@ if (profile == 'Продавец ') {
     var setIntervalId2 = setInterval(function () {
 
         var h3Roznica = document.getElementsByTagName('h3')[1];
-        console.log(h3Roznica);
+        //console.log(h3Roznica);
         if (h3Roznica && h3Roznica.innerText === 'Новые запчасти под заказ') {
             h3Roznica = document.getElementsByTagName('h3')[0];
         }
@@ -93,7 +93,7 @@ if (profile == 'Продавец ') {
         }
         var timeoutID2 = setTimeout(() => {
             clearInterval(setIntervalId2);
-            console.clear('Нет оптового склада и розничных');
+            console.clg('Нет оптового склада и розничных');
         }, 5000);
     }, 100);
 

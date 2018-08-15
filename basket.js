@@ -142,10 +142,13 @@ if (profile == "Продавец ") {
           }
         })
         .catch(function (error) {
-          console.log(
+          console.error(
             "There has been a problem with your fetch operation: " +
             error.message
           );
+          priceOpt[i].setAttribute('style', 'color: #FF0000;');
+          document.getElementsByClassName('cart-store-total-sum-value')[0].setAttribute('style', 'color: #FF0000;');
+
           //  alert('Включи mixed content');
         });
     }
