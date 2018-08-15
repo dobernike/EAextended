@@ -3,6 +3,14 @@
 This extenshen for google chrome and firefox.
 In future Opera, Yandex browser, EDGE and last IE, Electron and React.Native
 
+## Issue
+
+http://euroauto.ru/firms/all/la228/  в корзине выдает ошибку
+
+Добавить красным цены, которые не прошли fetch в корзине
+
+Убрать undefined (бесконечный) на розница серч.
+
 # TODO:
 
     Euroauto
@@ -48,17 +56,17 @@ https://amtel.club/cabinet/invoices
 
 https://amtel.club/cart/
 
-- Цена
-- Итого с доставкой
-- Прибыль
+- Цена (+)
+- Итого с доставкой (+)
+- Прибыль (+)
 - Отправка накладной на почту
 
 ## Поиск
 
 https://amtel.club/search/
 
-- Цена
-- Прибыль
+- Цена (+)
+- Прибыль (+)
 
 ## PopUp
 

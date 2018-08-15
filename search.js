@@ -61,6 +61,7 @@ if (profile == 'Продавец ') {
             h3Roznica = document.getElementsByTagName('h3')[0];
         }
         if (h3Roznica && h3Roznica.innerText === 'Розничная сеть') {
+            clearTimeout(timeoutID2);
             clearInterval(setIntervalId2);
 
             var retail = document.getElementById('block-content-ldc');
@@ -90,7 +91,10 @@ if (profile == 'Продавец ') {
             }
 
         }
-
+        var timeoutID2 = setTimeout(() => {
+            clearInterval(setIntervalId2);
+            console.clear('Нет оптового склада и розничных');
+        }, 5000);
     }, 100);
 
 } else {

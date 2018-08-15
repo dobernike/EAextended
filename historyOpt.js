@@ -1,3 +1,4 @@
+//not done
 console.clear('console is cleared');
 
 const seller = document.getElementsByClassName('dropdown-toggle')[1].innerText; // = "Продавец "

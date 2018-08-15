@@ -44,8 +44,16 @@
       "matches": ["https://amtel.club/cart/*"],
       "js": ["basket.js"],
       "run_at": "document_end"
+    },
+    {
+      "matches": ["https://amtel.club/cabinet/invoice/print/*"],
+      "js": ["invoiceOpt.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["https://amtel.club/cabinet/history/ldc/print/*"],
+      "js": ["invoiceEa.js"],
+      "run_at": "document_end"
     }
-
-
   ]
 }
