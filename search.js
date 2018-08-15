@@ -93,7 +93,8 @@ if (profile == 'Продавец ') {
         }
         var timeoutID2 = setTimeout(() => {
             clearInterval(setIntervalId2);
-            console.log('Нет оптового склада и розничных');
+            //  console.clear('s');
+            //console.log('Нет оптового склада и розничных');
         }, 5000);
     }, 100);
 
