@@ -5,7 +5,7 @@ In future Opera, Yandex browser, EDGE and last IE, Electron and React.Native
 
 ## Issue
 
-http://euroauto.ru/firms/all/la228/ и https://amtel.club/search/333311 в корзине выдает ошибку
+http://euroauto.ru/firms/all/la228/ и http://euroauto.ru/firms/all/333311/ в корзине выдает ошибку
 
 # TODO:
 
