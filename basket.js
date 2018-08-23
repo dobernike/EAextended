@@ -11,6 +11,7 @@ if (profile == "Продавец ") {
     let priceOpt = document.getElementsByClassName("cart-store-price-value");
     let summ = 0;
     let cnt = 0;
+    let count = 0;
 
     for (let i = 0; i < priceEa.length; i++) {
       let firm = priceEa[i].innerText;
@@ -82,8 +83,9 @@ if (profile == "Продавец ") {
           if (!price) {
             let settimeoutId = setTimeout(function() {
               clearInterval(setIntervalId);
-              //  console.log("bad");
 
+              //  console.log("bad");
+              cnt += 1;
               // в функцию
               price = price[1].replace(" ", "");
               //   console.log(price);
@@ -94,17 +96,27 @@ if (profile == "Продавец ") {
                 newPrice = price;
               } else {
                 // Устанавливается скидка 15%
-                var newCurentPrice = round(price * 0.85, 50);
-                var newFixedPrice = roundDown(price, 50);
+                var num = document.getElementsByName("num")[i].value;
+                var newCurentPrice = round(price * 0.85, 50) * Number(num);
+                var newFixedPrice = roundDown(price, 50) * Number(num);
                 if (newCurentPrice > cost) {
+                  //   console.log(newCurentPrice + " cur > " + cost);
                   newPrice = newCurentPrice;
                 } else if (newFixedPrice > cost) {
+                  //  console.log(newFixedPrice + " fix > " + cost);
                   newPrice = newFixedPrice;
                 }
+                // console.log(
+                //   newCurentPrice +
+                //     " cur i " +
+                //     newFixedPrice +
+                //     " fix != " +
+                //     cost +
+                //     " cost"
+                // );
               }
               priceOpt[i].setAttribute("style", "color: #337ab7;");
               priceOpt[i].innerText = newPrice;
-              cnt += 1;
             }, 20000);
             let setIntervalId = setInterval(function() {
               // console.log("good");
@@ -112,7 +124,7 @@ if (profile == "Продавец ") {
                 clearTimeout(settimeoutId);
                 clearInterval(setIntervalId);
                 //  console.log("very good");
-
+                cnt += 1;
                 // в функцию
                 price = price[1].replace(" ", "");
                 //  console.log(price);
@@ -123,20 +135,31 @@ if (profile == "Продавец ") {
                   newPrice = price;
                 } else {
                   // Устанавливается скидка 15%
-                  var newCurentPrice = round(price * 0.85, 50);
-                  var newFixedPrice = roundDown(price, 50);
+                  var num = document.getElementsByName("num")[i].value;
+                  var newCurentPrice = round(price * 0.85, 50) * Number(num);
+                  var newFixedPrice = roundDown(price, 50) * Number(num);
                   if (newCurentPrice > cost) {
+                    // console.log(newCurentPrice + " cur > " + cost);
                     newPrice = newCurentPrice;
                   } else if (newFixedPrice > cost) {
+                    // console.log(newFixedPrice + " fix > " + cost);
                     newPrice = newFixedPrice;
                   }
+                  // console.log(
+                  //   newCurentPrice +
+                  //     " cur i " +
+                  //     newFixedPrice +
+                  //     " fix != " +
+                  //     cost +
+                  //     " cost"
+                  // );
                 }
                 priceOpt[i].setAttribute("style", "color: #337ab7;");
                 priceOpt[i].innerText = newPrice;
-                cnt += 1;
               }
             }, 100);
           } else {
+            cnt += 1;
             // в функцию
             price = price[1].replace(" ", "");
             //    console.log(price);
@@ -147,123 +170,140 @@ if (profile == "Продавец ") {
               newPrice = price;
             } else {
               // Устанавливается скидка 15%
-              var newCurentPrice = round(price * 0.85, 50);
-              var newFixedPrice = roundDown(price, 50);
+              var num = document.getElementsByName("num")[i].value;
+              var newCurentPrice = round(price * 0.85, 50) * Number(num);
+              var newFixedPrice = roundDown(price, 50) * Number(num);
               if (newCurentPrice > cost) {
+                // console.log(newCurentPrice + " cur > " + cost);
                 newPrice = newCurentPrice;
               } else if (newFixedPrice > cost) {
+                // console.log(newFixedPrice + " fix > " + cost);
                 newPrice = newFixedPrice;
               }
+              // console.log(
+              //   newCurentPrice +
+              //     " cur i " +
+              //     newFixedPrice +
+              //     " fix != " +
+              //     cost +
+              //     " cost"
+              // );
             }
             priceOpt[i].setAttribute("style", "color: #337ab7;");
             priceOpt[i].innerText = newPrice;
-            cnt += 1;
           }
         })
         .then(function() {
-          console.log(cnt);
-          console.log(priceEa.length);
-          if (cnt == priceEa.length) {
-            let cartStoreWraps = document.getElementsByClassName(
-              "cart-store-wrap"
-            );
+          //    console.log("i: " + i + " cnt: " + cnt);
+          //    console.log(priceEa.length);
 
-            for (let j = 0; j < cartStoreWraps.length; j++) {
-              let cartStoreWrap = cartStoreWraps[j];
-              // Основной склад
-              if (
-                cartStoreWrap.getAttribute("data-url-history") ===
-                "/cabinet/history/lc"
-              ) {
-                let cartStoreWrapOptSum = 0;
-                let cartStoreWrapItem = cartStoreWrap.getElementsByClassName(
-                  "cart-store-item-wrap"
-                );
-                let cartStoreWrapOptOriginalSum = cartStoreWrapItem[
-                  cartStoreWrapItem.length - 1
-                ].getElementsByClassName("cart-store-total-sum-value")[0]
-                  .innerText;
+          var timerId = setTimeout(function tick() {
+            //  console.log("cnt: " + cnt);
+            count += 1;
+            //    console.log("count " + count);
+            if (cnt === priceEa.length && count === 1) {
+              clearInterval(timerId);
+              let cartStoreWraps = document.getElementsByClassName(
+                "cart-store-wrap"
+              );
 
-                for (let k = 0; k < cartStoreWrapItem.length - 1; k++) {
-                  let cartStoreWrapItemPrice = cartStoreWrapItem[
-                    k
-                  ].getElementsByClassName("cart-store-price-value")[0]
+              for (let j = 0; j < cartStoreWraps.length; j++) {
+                let cartStoreWrap = cartStoreWraps[j];
+                // Основной склад
+                if (
+                  cartStoreWrap.getAttribute("data-url-history") ===
+                  "/cabinet/history/lc"
+                ) {
+                  let cartStoreWrapOptSum = 0;
+                  let cartStoreWrapItem = cartStoreWrap.getElementsByClassName(
+                    "cart-store-item-wrap"
+                  );
+                  let cartStoreWrapOptOriginalSum = cartStoreWrapItem[
+                    cartStoreWrapItem.length - 1
+                  ].getElementsByClassName("cart-store-total-sum-value")[0]
                     .innerText;
-                  cartStoreWrapOptSum += Number(cartStoreWrapItemPrice);
-                }
-                let deliveryOpt = "";
 
-                if (cartStoreWrapOptSum < 3000) {
-                  deliveryOpt = " c доставой";
-                  cartStoreWrapOptSum += 300;
-                }
+                  for (let k = 0; k < cartStoreWrapItem.length - 1; k++) {
+                    let cartStoreWrapItemPrice = cartStoreWrapItem[
+                      k
+                    ].getElementsByClassName("cart-store-price-value")[0]
+                      .innerText;
+                    cartStoreWrapOptSum += Number(cartStoreWrapItemPrice);
+                  }
+                  let deliveryOpt = "";
 
-                let profitOpt =
-                  Number(cartStoreWrapOptSum) -
-                  Number(cartStoreWrapOptOriginalSum);
-                let profitOptCeil = roundUp(profitOpt / 2, 50);
-                cartStoreWrapItem[
-                  cartStoreWrapItem.length - 1
-                ].getElementsByClassName(
-                  "cart-store-total-sum-value"
-                )[0].innerText =
-                  cartStoreWrapOptSum +
-                  " руб " +
-                  deliveryOpt +
-                  " | Прибыль: " +
-                  profitOptCeil;
-              } else {
-                // Остальные склады
-                let cartStoreWrapEaSum = 0;
-                let cartStoreWrapItemEa = cartStoreWrap.getElementsByClassName(
-                  "cart-store-item-wrap"
-                );
-                let cartStoreWrapEaOriginalSum = cartStoreWrapItemEa[
-                  cartStoreWrapItemEa.length - 1
-                ].getElementsByClassName("cart-store-total-sum-value")[0]
-                  .innerText;
+                  if (cartStoreWrapOptSum < 3000) {
+                    deliveryOpt = " c доставой";
+                    cartStoreWrapOptSum += 300;
+                  }
 
-                cartStoreWrapItemEa[
-                  cartStoreWrapItemEa.length - 1
-                ].getElementsByClassName(
-                  "cart-store-num-comment"
-                )[0].innerText = "";
-
-                for (let l = 0; l < cartStoreWrapItemEa.length - 1; l++) {
-                  let cartStoreWrapItemEaPrice = cartStoreWrapItemEa[
-                    l
-                  ].getElementsByClassName("cart-store-price-value")[0]
-                    .innerText;
-                  cartStoreWrapEaSum += Number(cartStoreWrapItemEaPrice);
-                }
-                let profitEa =
-                  Number(cartStoreWrapEaSum) -
-                  Number(cartStoreWrapEaOriginalSum);
-                let deliveryEa = "";
-
-                if (cartStoreWrapEaSum < 3000) {
-                  deliveryEa = " c доставой";
-                  cartStoreWrapEaSum += 300;
-                }
-                let profitEaCeil = 0;
-                if (profitEa >= 800) {
-                  profitEaCeil = roundUp(profitEa / 2, 50);
+                  let profitOpt =
+                    Number(cartStoreWrapOptSum) -
+                    Number(cartStoreWrapOptOriginalSum);
+                  let profitOptCeil = roundUp(profitOpt / 2, 50);
+                  cartStoreWrapItem[
+                    cartStoreWrapItem.length - 1
+                  ].getElementsByClassName(
+                    "cart-store-total-sum-value"
+                  )[0].innerText =
+                    cartStoreWrapOptSum +
+                    " руб " +
+                    deliveryOpt +
+                    " | Прибыль: " +
+                    profitOptCeil;
                 } else {
-                  profitEaCeil = profitEa;
+                  // Остальные склады
+                  let cartStoreWrapEaSum = 0;
+                  let cartStoreWrapItemEa = cartStoreWrap.getElementsByClassName(
+                    "cart-store-item-wrap"
+                  );
+                  let cartStoreWrapEaOriginalSum = cartStoreWrapItemEa[
+                    cartStoreWrapItemEa.length - 1
+                  ].getElementsByClassName("cart-store-total-sum-value")[0]
+                    .innerText;
+
+                  cartStoreWrapItemEa[
+                    cartStoreWrapItemEa.length - 1
+                  ].getElementsByClassName(
+                    "cart-store-num-comment"
+                  )[0].innerText = "";
+
+                  for (let l = 0; l < cartStoreWrapItemEa.length - 1; l++) {
+                    let cartStoreWrapItemEaPrice = cartStoreWrapItemEa[
+                      l
+                    ].getElementsByClassName("cart-store-price-value")[0]
+                      .innerText;
+                    cartStoreWrapEaSum += Number(cartStoreWrapItemEaPrice);
+                  }
+                  let profitEa =
+                    Number(cartStoreWrapEaSum) -
+                    Number(cartStoreWrapEaOriginalSum);
+                  let deliveryEa = "";
+
+                  if (cartStoreWrapEaSum < 3000) {
+                    deliveryEa = " c доставой";
+                    cartStoreWrapEaSum += 300;
+                  }
+                  let profitEaCeil = 0;
+                  if (profitEa >= 800) {
+                    profitEaCeil = roundUp(profitEa / 2, 50);
+                  } else {
+                    profitEaCeil = profitEa;
+                  }
+                  cartStoreWrapItemEa[
+                    cartStoreWrapItemEa.length - 1
+                  ].getElementsByClassName(
+                    "cart-store-total-sum-value"
+                  )[0].innerText =
+                    cartStoreWrapEaSum +
+                    " руб " +
+                    deliveryEa +
+                    " | Прибыль: " +
+                    profitEaCeil;
                 }
-                cartStoreWrapItemEa[
-                  cartStoreWrapItemEa.length - 1
-                ].getElementsByClassName(
-                  "cart-store-total-sum-value"
-                )[0].innerText =
-                  cartStoreWrapEaSum +
-                  " руб " +
-                  deliveryEa +
-                  " | Прибыль: " +
-                  profitEaCeil;
               }
             }
-          }
+          }, 5000);
         })
         .catch(function(error) {
           console.error(
