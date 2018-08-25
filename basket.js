@@ -242,21 +242,21 @@ if (profile == "Продавец ") {
                     Number(cartStoreWrapOptSum) -
                     Number(cartStoreWrapOptOriginalSum);
 
-                  console.log("cartStoreWrapOptSum " + cartStoreWrapOptSum);
-                  console.log(
-                    "cartStoreWrapOptOriginalSum " + cartStoreWrapOptOriginalSum
-                  );
-                  console.log(
-                    "progitOpt = cartStoreWrapOptSum " +
-                      Number(cartStoreWrapOptSum) +
-                      " - " +
-                      "cartStoreWrapOptOriginalSum " +
-                      Number(cartStoreWrapOptOriginalSum)
-                  );
+                  //console.log("cartStoreWrapOptSum " + cartStoreWrapOptSum);
+                  // console.log(
+                  //   "cartStoreWrapOptOriginalSum " + cartStoreWrapOptOriginalSum
+                  // );
+                  // console.log(
+                  //   "progitOpt = cartStoreWrapOptSum " +
+                  //     Number(cartStoreWrapOptSum) +
+                  //     " - " +
+                  //     "cartStoreWrapOptOriginalSum " +
+                  //     Number(cartStoreWrapOptOriginalSum)
+                  // );
 
                   let profitOptCeil = roundUp(profitOpt / 2, 50);
 
-                  console.log("profitOptCeil " + profitOptCeil);
+                  // console.log("profitOptCeil " + profitOptCeil);
 
                   cartStoreWrapItem[
                     cartStoreWrapItem.length - 1
