@@ -90,13 +90,14 @@ if (profile == "Продавец ") {
               price = price[1].replace(" ", "");
               //   console.log(price);
               var newPrice = 0;
+              var num = document.getElementsByName("num")[i].value;
               if (itemNameOil == "Масло") {
-                newPrice = roundDown(price, 50);
+                newPrice = roundDown(price, 50) * Number(num);
               } else if (itemProp == "Новый") {
-                newPrice = price;
+                newPrice = price * Number(num);
               } else {
                 // Устанавливается скидка 15%
-                var num = document.getElementsByName("num")[i].value;
+
                 var newCurentPrice = round(price * 0.85, 50) * Number(num);
                 var newFixedPrice = roundDown(price, 50) * Number(num);
                 if (newCurentPrice > cost) {
@@ -129,13 +130,13 @@ if (profile == "Продавец ") {
                 price = price[1].replace(" ", "");
                 //  console.log(price);
                 var newPrice = 0;
+                var num = document.getElementsByName("num")[i].value;
                 if (itemNameOil == "Масло") {
-                  newPrice = roundDown(price, 50);
+                  newPrice = roundDown(price, 50) * Number(num);
                 } else if (itemProp == "Новый") {
-                  newPrice = price;
+                  newPrice = price * Number(num);
                 } else {
                   // Устанавливается скидка 15%
-                  var num = document.getElementsByName("num")[i].value;
                   var newCurentPrice = round(price * 0.85, 50) * Number(num);
                   var newFixedPrice = roundDown(price, 50) * Number(num);
                   if (newCurentPrice > cost) {
@@ -164,13 +165,13 @@ if (profile == "Продавец ") {
             price = price[1].replace(" ", "");
             //    console.log(price);
             var newPrice = 0;
+            var num = document.getElementsByName("num")[i].value;
             if (itemNameOil == "Масло") {
-              newPrice = roundDown(price, 50);
+              newPrice = roundDown(price, 50) * Number(num);
             } else if (itemProp == "Новый") {
-              newPrice = price;
+              newPrice = price * Number(num);
             } else {
               // Устанавливается скидка 15%
-              var num = document.getElementsByName("num")[i].value;
               var newCurentPrice = round(price * 0.85, 50) * Number(num);
               var newFixedPrice = roundDown(price, 50) * Number(num);
               if (newCurentPrice > cost) {
@@ -240,7 +241,23 @@ if (profile == "Продавец ") {
                   let profitOpt =
                     Number(cartStoreWrapOptSum) -
                     Number(cartStoreWrapOptOriginalSum);
+
+                  console.log("cartStoreWrapOptSum " + cartStoreWrapOptSum);
+                  console.log(
+                    "cartStoreWrapOptOriginalSum " + cartStoreWrapOptOriginalSum
+                  );
+                  console.log(
+                    "progitOpt = cartStoreWrapOptSum " +
+                      Number(cartStoreWrapOptSum) +
+                      " - " +
+                      "cartStoreWrapOptOriginalSum " +
+                      Number(cartStoreWrapOptOriginalSum)
+                  );
+
                   let profitOptCeil = roundUp(profitOpt / 2, 50);
+
+                  console.log("profitOptCeil " + profitOptCeil);
+
                   cartStoreWrapItem[
                     cartStoreWrapItem.length - 1
                   ].getElementsByClassName(
