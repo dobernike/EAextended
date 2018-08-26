@@ -47,12 +47,14 @@
     },
     {
       "matches": ["https://amtel.club/cabinet/invoice/print/*"],
-      "js": ["invoiceOpt.js"],
+      "js": ["lib/jquery-3.3.1.min.js", "lib/JsBarcode.code128.min.js", "invoiceOpt.js"],
       "run_at": "document_end"
     },
     {
       "matches": ["https://amtel.club/cabinet/history/ldc/print/*"],
-      "js": ["invoiceEa.js"],
+      "js": ["lib/jquery-3.3.1.min.js", "lib/JsBarcode.code128.min.js",
+        "invoiceEa.js"
+      ],
       "run_at": "document_end"
     }
   ]

@@ -5,80 +5,178 @@ let realsumm = 0;
 let actNum = "";
 let date = "";
 
-  let realsummt = $('td[colspan="5"]').next().html().replace(" ", "");
-  realsumm = toNumber(realsummt);
-  //////////////////////TODO: DELETE/////////////////////////
-  $("tr td:first-child").click(function () {
-    $(this).parent().remove();
+let realsummt = $('td[colspan="5"]').next().html().replace(" ", "");
+realsumm = toNumber(realsummt);
+//////////////////////TODO: DELETE/////////////////////////
+$("tr td:first-child").click(function () {
+  $(this).parent().remove();
 
-    recalculate();
-  });
-  //@@@@@@@@@@@@@@@@@@@@@ Search brands
-  var regr2 = /<option .*?>(.*? .*?)<\/option>/g;
-  var doods = "";
-  var url3 = "http://euroauto.ru/brand/";
+  recalculate();
+});
+//@@@@@@@@@@@@@@@@@@@@@ Search brands
+var regr2 = /<option .*?>(.*? .*?)<\/option>/g;
+var doods = "";
+var url3 = "http://euroauto.ru/brand/";
 
-  fetch(url3).then(resp => resp.text()).then(function (data) {
-    data = data.substring(0, data.indexOf("</select>"));
-    while ((rec = regr2.exec(data)) != null) {
-      if (rec[1] != "Все бренды") {
-        doods += rec[1] + "|";
-      }
+fetch(url3).then(resp => resp.text()).then(function (data) {
+  data = data.substring(0, data.indexOf("</select>"));
+  while ((rec = regr2.exec(data)) != null) {
+    if (rec[1] != "Все бренды") {
+      doods += rec[1] + "|";
     }
-    doods = doods
-      .replaceAll("(", "\\(")
-      .replaceAll(")", "\\)")
-      .replaceAll("/", "\\/");
-    //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ end
-    var infoTable = $("table[id=info]");
-    infoTable.html(
-      '<table id="info"><tr><td><ul id="receiver"><b><li>Адрес поставки: Стрельна, ул. Нижняя Колония, д. 49Б +79626803377</li> <li>Поставщик: Индивидуальный Предприниматель Федюшин П.Д.</li></b></ul></td></tr></table>'
-    );
+  }
+  doods = doods
+    .replaceAll("(", "\\(")
+    .replaceAll(")", "\\)")
+    .replaceAll("/", "\\/");
+  //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ end
+  var infoTable = $("table[id=info]");
+  infoTable.html(
+    '<table id="info"><tr><td><ul id="receiver"><b><li>Адрес поставки: Стрельна, ул. Нижняя Колония, д. 49Б +79626803377</li> <li>Поставщик: Индивидуальный Предприниматель Федюшин П.Д.</li></b></ul></td></tr></table>'
+  );
 
-    $(".total")[1].remove();
+  $(".total")[1].remove();
 
-    $("h1").html($("h1").html().replace("/2016", "").replace("/2017", "").replace("/2018", "").replace("Site-", ""));
-    $("h1").html($("h1").html().replace("16537", getRandomInt(10000, 100000)));
-    actNum = $("h1").html().match(/.*№ (.*?) /)[1];
-    date = $("h1").html().match(/(\d{2}).(\d{2}).(\d{4})/)[0];
+  $("h1").html($("h1").html().replace("/2016", "").replace("/2017", "").replace("/2018", "").replace("Site-", ""));
+  $("h1").html($("h1").html().replace("16537", getRandomInt(10000, 100000)));
+  actNum = $("h1").html().match(/.*№ (.*?) /)[1];
+  date = $("h1").html().match(/(\d{2}).(\d{2}).(\d{4})/)[0];
 
-    $("#pay_till").html('<svg id="barcode"></svg>');
-    JsBarcode("#barcode", actNum, {
-      format: "CODE128",
-      width: 2,
-      height: 50,
-      displayValue: false
-    });
-    var rows = $("#order tbody tr");
-    var cnt = rows.length - 1;
+  $("#pay_till").html('<svg id="barcode"></svg>');
+  JsBarcode("#barcode", actNum, {
+    format: "CODE128",
+    width: 2,
+    height: 50,
+    displayValue: false
+  });
+  var rows = $("#order tbody tr");
+  var cnt = rows.length - 1;
 
-    $.each(rows, function (index, value) {
-      if (index != rows.length - 1) {
-        var mat1 = value.cells[1];
-        var regg = new RegExp("(" + doods + ".*?) (.*?) (.*?)$");
-        var mat = regg.exec(mat1.innerHTML);
-        var art = mat[2];
-        var firm = mat[1];
-        var itemName = mat[3];
-        art = art.replaceAll(".", "").replaceAll("/", "").replaceAll("-", "");
-        var url = "https://euroauto.ru/searchnr/" + art;
+  $.each(rows, function (index, value) {
+    if (index != rows.length - 1) {
+      var mat1 = value.cells[1];
+      var regg = new RegExp("(" + doods + ".*?) (.*?) (.*?)$");
+      var mat = regg.exec(mat1.innerHTML);
+      var art = mat[2];
+      let artFixed = art.replace("-", "");
+      var firm = mat[1];
+      firm = firm
+        .replace(" ", "_")
+        .replace("(", "_")
+        .replace(")", "")
+        .replace("__", "_");
+      var itemName = mat[3];
+      art = art.replaceAll(".", "").replaceAll("/", "").replaceAll("-", "");
+      var url = "https://euroauto.ru/searchnr/" + art;
 
-        fetch(url).then(resp => resp.text()).then(function (data) {
-          var price = data.match(
-            /(<span .* itemprop="price".*>|<span .*price_num_real.*>)(.*\d)<\/span>/
+      fetch(url).then(resp => resp.text()).then(function (data) {
+        let price = data.match(/<a.class="toggle-store-list">В.наличии\W.*<div.class="num-price">(\d.*)\W.*<span.class="rubl">.<\/span><\/div>/);
+        //console.log('did ' + price);
+        if (!price) {
+
+          price = data.match(
+            /<span\W*itemprop="price"\W*content=".*">(\d.*)<\/span><span itemprop="priceCurrency" content="RUB">руб.<\/span>/m
           );
-          if (price) {
-            price = price[2].replace(" ", "");
+        } else if (!price) {
+          price = data.match(
+            /<div.class="text-left btn btn-default active">\W.*\W.*\W.*\W.*<span.class="price">(\d.*)<\/span>.*<\/span>/
+          );
+        }
+
+        if (price) {
+          price = price[1].replace(" ", "");
+          var cc = value.cells[4].innerText.replace(" ", "");
+          var ce = value.cells[4].innerText;
+          console.log(ce);
+
+          var cost = Number(cc);
+          //  console.log('cost+ ' + cost);
+          var newPrice = 0;
+
+          if (itemName.toLowerCase().indexOf("масло") > -1) {
+            //         price = roundDown(toNumber(price), 100);
+            newPrice = roundDown(price, 50);
+          } else {
+            //  price = roundUp(toNumber(price) * 0.85, 50);
+
+            // Устанавливается скидка 15%
+            var newCurentPrice = round(price * 0.85, 50);
+            var newFixedPrice = roundDown(price, 50);
+            if (newCurentPrice > cost) {
+              newPrice = newCurentPrice;
+            } else if (newFixedPrice > cost) {
+              newPrice = newFixedPrice;
+            }
+          }
+
+
+
+          value.cells[4].innerHTML = NumSplitter(newPrice + "");
+          value.cells[5].innerHTML =
+            Number(newPrice) * toNumber(value.cells[2].innerHTML);
+          cnt--;
+
+          if (MaxPrice.length == 0) {
+            MaxPrice[0] = itemName;
+            MaxPrice[1] = price;
+          } else {
+            if (MaxPrice[1] < price) MaxPrice = [itemName, price];
+          }
+          if (cnt == 0) recalculate();
+        } else {
+          let url2 = "https://euroauto.ru/firms/" + firm + "/" + artFixed + "/";
+
+          fetch(url2).then(resp => resp.text()).then(function (data) {
+            price = data.match(/<a.class="toggle-store-list">В.наличии\W.*<div.class="num-price">(\d.*)\W.*<span.class="rubl">.<\/span><\/div>/);
+            //console.log('did ' + price);
+            if (!price) {
+
+              price = data.match(
+                /<span\W*itemprop="price"\W*content=".*">(\d.*)<\/span><span itemprop="priceCurrency" content="RUB">руб.<\/span>/m
+              );
+            } else if (!price) {
+              price = data.match(
+                /<div.class="text-left btn btn-default active">\W.*\W.*\W.*\W.*<span.class="price">(\d.*)<\/span>.*<\/span>/
+              );
+            }
+
+            price = price[1].replace(" ", "");
+            var ce = value.cells[4].innerText;
+            console.log(ce);
+            var cc = value.cells[4].innerText.replace(" ", "");
+
+            var cost = Number(cc);
+            console.log('cost+ ' + cost);
+            var newPrice = 0;
+
 
             if (itemName.toLowerCase().indexOf("масло") > -1) {
-              price = roundDown(toNumber(price), 100);
+              //         price = roundDown(toNumber(price), 100);
+              newPrice = roundDown(price, 50);
             } else {
-              price = roundUp(toNumber(price) * 0.85, 50);
+              //  price = roundUp(toNumber(price) * 0.85, 50);
+
+              // Устанавливается скидка 15%
+              var newCurentPrice = round(price * 0.85, 50);
+              console.log(newCurentPrice + " newCurentPrice + cost " + cost + ' price + ' + price);
+              var newFixedPrice = roundDown(price, 50);
+              console.log(newFixedPrice + " newFixedPrice + cost " + cost + ' price + ' + price);
+              if (Number(newCurentPrice) > Number(cost)) {
+                newPrice = newCurentPrice;
+                console.log(cost + ' Current');
+              } else if (Number(newFixedPrice) > Number(cost)) {
+                newPrice = newFixedPrice;
+                console.log(cost + ' fixed');
+              }
             }
-            value.cells[4].innerHTML = NumSplitter(price + "");
+
+
+
+            value.cells[4].innerHTML = NumSplitter(newPrice + "");
             value.cells[5].innerHTML =
-              price * toNumber(value.cells[2].innerHTML);
+              Number(newPrice) * toNumber(value.cells[2].innerHTML);
             cnt--;
+
             if (MaxPrice.length == 0) {
               MaxPrice[0] = itemName;
               MaxPrice[1] = price;
@@ -86,39 +184,12 @@ let date = "";
               if (MaxPrice[1] < price) MaxPrice = [itemName, price];
             }
             if (cnt == 0) recalculate();
-          } else {
-            var url2 = "https://euroauto.ru/firms/" + firm + "/" + art + "/";
-
-            fetch(url2).then(resp => resp.text()).then(function (data) {
-              price = data.match(
-                /(<span .* itemprop="price".*>|<span .*price_num_real.*>)(.*\d)<\/span>/
-              );
-
-              price = price[2].replace(" ", "");
-
-              if (itemName.toLowerCase().indexOf("масло") > -1) {
-                price = roundDown(toNumber(price), 100);
-              } else {
-                price = roundUp(toNumber(price) * 0.85, 50);
-              }
-              value.cells[4].innerHTML = NumSplitter(price + "");
-              value.cells[5].innerHTML =
-                price * toNumber(value.cells[2].innerHTML);
-              cnt--;
-
-              if (MaxPrice.length == 0) {
-                MaxPrice[0] = itemName;
-                MaxPrice[1] = price;
-              } else {
-                if (MaxPrice[1] < price) MaxPrice = [itemName, price];
-              }
-              if (cnt == 0) recalculate();
-            });
-          }
-        });
-      }
-    });
+          });
+        }
+      });
+    }
   });
+});
 
 
 function getRandomInt(min, max) {
@@ -134,7 +205,7 @@ function toNumber(string) {
 }
 
 function roundUp(num, precision) {
-  return Math.round(num / precision) * precision;
+  return Math.ceil(num / precision) * precision;
 }
 
 function roundDown(num, precision) {
@@ -176,13 +247,13 @@ function recalculate() {
         NumSplitter(summ + "") +
         " руб.</p>"
       );
-      let sumString = $("#sum-names").html(summ.numberToString(true));
     }
   });
+  let profitOptCeil = roundUp((Number(summ) - Number(realsumm)) / 2, 50);
   document.title =
     date +
     " " +
-    (summ - realsumm) / 2 +
+    profitOptCeil +
     " руб " +
     " № " +
     actNum +
@@ -335,3 +406,7 @@ Number.prototype.numberToString = function (toUpper) {
 String.prototype.numberToString = function (toUpper) {
   return numberToString(this, toUpper);
 };
+
+function round(num, precision) {
+  return Math.round(num / precision) * precision;
+}
