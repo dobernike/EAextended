@@ -66,10 +66,11 @@ if (profile == 'Продавец ') {
 
             var retail = document.getElementById('block-content-ldc');
             var priceRetail = retail.getElementsByClassName('old-appraise-item-price');
-            var divOldPrice = retail.getElementsByClassName('old-appraise-item-retail-price');
+            // var divOldPrice = retail.getElementsByClassName('old-appraise-item-retail-price');
             var originalRetailPrice = retail.getElementsByClassName('old-appraise-item-retail-price-num');
-            var itemNameRetail = retail.getElementsByClassName('old-appraise-item-description')[1].innerText;
-            itemNameRetail = itemNameRetail.match(/\Масло/);
+            // console.log(retail.getElementsByClassName('old-appraise-item-description'));
+            // var itemNameRetail = retail.getElementsByClassName('old-appraise-item-description')[0].innerText;
+            // itemNameRetail = itemNameRetail.match(/\Масло/);
             var infoRetail = retail.getElementsByClassName('fa fa-info-circle');
             var profitRetail = 0;
 
