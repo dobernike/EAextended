@@ -1,14 +1,14 @@
 ﻿{
   "manifest_version": 2,
   "name": "EAextend",
-  "version": "2.0",
-  "description": "Автоматизация накладной",
+  "version": "3.0",
+  "description": "Автоматизация продаж EA",
   "icons": {
     "48": "img/icon.png"
   },
 
   "browser_action": {
-    "default_title": "Автоматизация накладной",
+    "default_title": "Автоматизация продаж EA",
     "default_icon": "img/icon.png",
     "default_popup": "popup.html"
   },
