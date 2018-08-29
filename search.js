@@ -40,7 +40,7 @@ if (profile == "Продавец") {
         }
         var finalPrice = Number(price[i].innerText);
         var profit = Number(price[i].innerText) - optPrice;
-        price[i].innerHTML = finalPrice + " | <span style='color: green;'>" + profit + "</span>";
+        price[i].innerHTML = finalPrice + "<span style='color: red'>|</span><span style='color: green;'>" + profit + "</span>";
 
       }
     }
@@ -85,7 +85,7 @@ if (profile == "Продавец") {
           priceRetail[j].innerText = Number(clearPriceRetail);
         }
         var finalRetainPrice = Number(priceRetail[j].innerText);
-        priceRetail[j].innerHTML = finalRetainPrice + " | <span style='color: green;'>" + profitRetail + "</span>";
+        priceRetail[j].innerHTML = finalRetainPrice + "<span style='color: red'>|</span><span style='color: green;'>" + profitRetail + "</span>";
       }
     }
     var timeoutID2 = setTimeout(() => {
