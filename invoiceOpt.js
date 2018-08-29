@@ -57,6 +57,8 @@ fetch(url3).then(resp => resp.text()).then(function (data) {
       var mat1 = value.cells[1];
       var regg = new RegExp("(" + doods + ".*?) (.*?) (.*?)$");
       var mat = regg.exec(mat1.innerHTML);
+      var costN = value.cells[4].innerText.replace(' ', '').replace('.00', '');
+      //console.log(costN);
       var art = mat[2];
       let artFixed = art.replace("-", "");
       var firm = mat[1];
@@ -72,22 +74,22 @@ fetch(url3).then(resp => resp.text()).then(function (data) {
       fetch(url).then(resp => resp.text()).then(function (data) {
         let price = data.match(/<a.class="toggle-store-list">В.наличии\W.*<div.class="num-price">(\d.*)\W.*<span.class="rubl">.<\/span><\/div>/);
         //console.log('did ' + price);
-        if (!price) {
+        if (!price || Number(price[1].replace(" ", "")) <= Number(costN)) {
 
           price = data.match(
             /<span\W*itemprop="price"\W*content=".*">(\d.*)<\/span><span itemprop="priceCurrency" content="RUB">руб.<\/span>/m
           );
-        } else if (!price) {
+        } else if (!price || Number(price[1].replace(" ", "")) <= Number(costN)) {
           price = data.match(
             /<div.class="text-left btn btn-default active">\W.*\W.*\W.*\W.*<span.class="price">(\d.*)<\/span>.*<\/span>/
           );
         }
 
-        if (price) {
+        if (price && Number(price[1].replace(" ", "")) >= Number(costN)) {
           price = price[1].replace(" ", "");
           var cc = value.cells[4].innerText.replace(" ", "");
           var ce = value.cells[4].innerText;
-          console.log(ce);
+          // console.log(ce);
 
           var cost = Number(cc);
           //  console.log('cost+ ' + cost);
@@ -129,12 +131,12 @@ fetch(url3).then(resp => resp.text()).then(function (data) {
           fetch(url2).then(resp => resp.text()).then(function (data) {
             price = data.match(/<a.class="toggle-store-list">В.наличии\W.*<div.class="num-price">(\d.*)\W.*<span.class="rubl">.<\/span><\/div>/);
             //console.log('did ' + price);
-            if (!price) {
+            if (!price || Number(price[1].replace(" ", "")) <= Number(costN)) {
 
               price = data.match(
                 /<span\W*itemprop="price"\W*content=".*">(\d.*)<\/span><span itemprop="priceCurrency" content="RUB">руб.<\/span>/m
               );
-            } else if (!price) {
+            } else if (!price || Number(price[1].replace(" ", "")) <= Number(costN)) {
               price = data.match(
                 /<div.class="text-left btn btn-default active">\W.*\W.*\W.*\W.*<span.class="price">(\d.*)<\/span>.*<\/span>/
               );
@@ -142,11 +144,11 @@ fetch(url3).then(resp => resp.text()).then(function (data) {
 
             price = price[1].replace(" ", "");
             var ce = value.cells[4].innerText;
-            console.log(ce);
+            //    console.log(ce);
             var cc = value.cells[4].innerText.replace(" ", "");
 
             var cost = Number(cc);
-            console.log('cost+ ' + cost);
+            //   console.log('cost+ ' + cost);
             var newPrice = 0;
 
 
@@ -158,15 +160,15 @@ fetch(url3).then(resp => resp.text()).then(function (data) {
 
               // Устанавливается скидка 15%
               var newCurentPrice = round(price * 0.85, 50);
-              console.log(newCurentPrice + " newCurentPrice + cost " + cost + ' price + ' + price);
+              //    console.log(newCurentPrice + " newCurentPrice + cost " + cost + ' price + ' + price);
               var newFixedPrice = roundDown(price, 50);
-              console.log(newFixedPrice + " newFixedPrice + cost " + cost + ' price + ' + price);
+              //     console.log(newFixedPrice + " newFixedPrice + cost " + cost + ' price + ' + price);
               if (Number(newCurentPrice) > Number(cost)) {
                 newPrice = newCurentPrice;
-                console.log(cost + ' Current');
+                //      console.log(cost + ' Current');
               } else if (Number(newFixedPrice) > Number(cost)) {
                 newPrice = newFixedPrice;
-                console.log(cost + ' fixed');
+                //       console.log(cost + ' fixed');
               }
             }
 
@@ -247,6 +249,7 @@ function recalculate() {
         NumSplitter(summ + "") +
         " руб.</p>"
       );
+      let sumString = $("#sum-names").html(summ.numberToString(true));
     }
   });
   let profitOptCeil = roundUp((Number(summ) - Number(realsumm)) / 2, 50);
