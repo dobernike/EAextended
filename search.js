@@ -1,7 +1,7 @@
 var profile = document.getElementsByClassName("dropdown-toggle")[1].innerText;
-console.log(profile);
-if (profile == "Продавец " || profile == "Продавец") {
-  var setIntervalId = setInterval(function() {
+profile = profile.trim();
+if (profile == "Продавец") {
+  var setIntervalId = setInterval(function () {
     var h3 = document.getElementsByTagName("h3")[0];
     // Подгрузка всего контента
     if (h3 && h3.innerText === "Основной склад") {
@@ -17,10 +17,10 @@ if (profile == "Продавец " || profile == "Продавец") {
         "old-appraise-item-description"
       )[1].innerText;
       itemName = itemName.match(/\Масло/);
-      var info = opt.getElementsByClassName("fa fa-info-circle");
+      // var info = opt.getElementsByClassName("fa fa-info-circle");
 
       for (var i = 0; i < price.length; i++) {
-        info[i].setAttribute("style", "color:green");
+        // info[i].setAttribute("style", "color:green");
         var eaPrice = Number(
           price[i].getAttribute("data-price-ea").replace(" ", "")
         );
@@ -38,8 +38,10 @@ if (profile == "Продавец " || profile == "Продавец") {
             price[i].innerText = newFixedPrice;
           }
         }
+        var finalPrice = Number(price[i].innerText);
         var profit = Number(price[i].innerText) - optPrice;
-        info[i].innerText = " " + profit;
+        price[i].innerHTML = finalPrice + " | <span style='color: green;'>" + profit + "</span>";
+
       }
     }
     var timeoutID = setTimeout(() => {
@@ -47,7 +49,7 @@ if (profile == "Продавец " || profile == "Продавец") {
     }, 5000);
   }, 100);
   // Розница
-  var setIntervalId2 = setInterval(function() {
+  var setIntervalId2 = setInterval(function () {
     var h3Roznica = document.getElementsByTagName("h3")[1];
     if (h3Roznica && h3Roznica.innerText === "Новые запчасти под заказ") {
       h3Roznica = document.getElementsByTagName("h3")[0];
@@ -63,7 +65,7 @@ if (profile == "Продавец " || profile == "Продавец") {
       var originalRetailPrice = retail.getElementsByClassName(
         "old-appraise-item-retail-price-num"
       );
-      var infoRetail = retail.getElementsByClassName("fa fa-info-circle");
+      // var infoRetail = retail.getElementsByClassName("fa fa-info-circle");
       var profitRetail = 0;
 
       for (var j = 0; j < priceRetail.length; j++) {
@@ -73,7 +75,7 @@ if (profile == "Продавец " || profile == "Продавец") {
         var clearOriginalRetailPrice = originalRetailPrice[j].innerText
           .replace(" a ", "")
           .replace(" ", "");
-        infoRetail[j].setAttribute("style", "color:green");
+        // infoRetail[j].setAttribute("style", "color:green");
         if (Number(clearOriginalRetailPrice) != 0) {
           profitRetail =
             Number(clearOriginalRetailPrice) - Number(clearPriceRetail);
@@ -82,7 +84,8 @@ if (profile == "Продавец " || profile == "Продавец") {
           profitRetail = 0;
           priceRetail[j].innerText = Number(clearPriceRetail);
         }
-        infoRetail[j].innerText = " " + profitRetail;
+        var finalRetainPrice = Number(priceRetail[j].innerText);
+        priceRetail[j].innerHTML = finalRetainPrice + " | <span style='color: green;'>" + profitRetail + "</span>";
       }
     }
     var timeoutID2 = setTimeout(() => {

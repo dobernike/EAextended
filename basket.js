@@ -1,6 +1,6 @@
 let profile = document.getElementsByClassName("dropdown-toggle")[1].innerText;
-
-if (profile == "Продавец " || profile == "Продавец") {
+profile = profile.trim();
+if (profile == "Продавец") {
   let div = document.getElementsByTagName("hr")[0].nextElementSibling;
 
   if (div.getAttribute("style") == "display: none") {
