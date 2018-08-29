@@ -39,39 +39,40 @@ if (profile == "Продавец") {
         .then(resp => resp.text())
         .then(function (data) {
           let price = data.match(/<a.class="toggle-store-list">В.наличии\W.*<div.class="num-price">(\d.*)\W.*<span.class="rubl">.<\/span><\/div>/);
-          if (!price) {
+          if (!price || Number(price[1].replace(" ", "")) <= Number(cost)) {
             price = data.match(
               /<span\W*itemprop="price"\W*content=".*">(\d.*)<\/span><span itemprop="priceCurrency" content="RUB">руб.<\/span>/m
             );
           }
 
-          if (!price) {
+          if (!price || Number(price[1].replace(" ", "")) <= Number(cost)) {
             price = data.match(
               /<div.class="text-left btn btn-default active">\W.*\W.*\W.*\W.*<span.class="price">(\d.*)<\/span>.*<\/span>/
             );
-            if (!price) {
+            if (!price || Number(price[1].replace(" ", "")) <= Number(cost)) {
 
               fetch(url2)
                 .then(resp => resp.text())
                 .then(function (data) {
                   price = data.match(/<a.class="toggle-store-list">В.наличии\W.*<div.class="num-price">(\d.*)\W.*<span.class="rubl">.<\/span><\/div>/);
-                  if (!price) {
+                  if (!price || Number(price[1].replace(" ", "")) <= Number(cost)) {
                     price = data.match(
                       /<span\W*itemprop="price"\W*content=".*">(\d.*)<\/span><span itemprop="priceCurrency" content="RUB">руб.<\/span>/m
                     );
                   }
-                  if (!price) {
+                  if (!price || Number(price[1].replace(" ", "")) <= Number(cost)) {
                     price = data.match(
                       /<div.class="text-left btn btn-default active">\W.*\W.*\W.*\W.*<span.class="price">(\d.*)<\/span>.*<\/span>/
                     );
                   }
-                  if (price) {
+                  if (price && Number(price[1].replace(" ", "")) >= Number(cost)) {
                     return price;
                   }
                 });
             }
           }
-          if (!price) {
+          console.log(price);
+          if (!price || Number(price[1].replace(" ", "")) <= Number(cost)) {
             let settimeoutId = setTimeout(function () {
               clearInterval(setIntervalId);
               cnt += 1;
