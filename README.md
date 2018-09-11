@@ -6,6 +6,7 @@ In future Opera, Yandex browser, EDGE and last IE, Electron and React.Native
 ## Issue
 
 https://euroauto.ru/searchnr/92109300 и https://euroauto.ru/searchnr/DF2592 в корзине выдает ошибку
+KH16TT Denso
 
 # TODO:
 
