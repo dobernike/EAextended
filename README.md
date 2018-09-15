@@ -11,6 +11,7 @@ GFLH-002
 в серче розница nan
 
 https://euroauto.ru/searchnr/92109300 и https://euroauto.ru/searchnr/DF2592 в корзине выдает ошибку
+KH16TT Denso в корзине ошибка, а в накладной, нет.
 
 # TODO:
 
