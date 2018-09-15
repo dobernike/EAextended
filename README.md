@@ -5,6 +5,11 @@ In future Opera, Yandex browser, EDGE and last IE, Electron and React.Native
 
 ## Issue
 
+в серче на главном nan
+GFLH-002
+
+в серче розница nan
+
 https://euroauto.ru/searchnr/92109300 и https://euroauto.ru/searchnr/DF2592 в корзине выдает ошибку
 
 # TODO:
