@@ -15,6 +15,13 @@ KH16TT Denso в корзине ошибка, а в накладной, нет.
 
 в баскете неправильно считает прибыль. Не учитывает, что доставка оригинал - общая
 
+в корзине
+AP107/8 Filtron
+basket.js:80 Uncaught TypeError: Cannot read property '1' of null
+at basket.js:80
+
+в корзине больше 1 GFFH-061 Onnuri не работает?
+
 # TODO:
 
     Euroauto
