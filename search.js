@@ -1,6 +1,7 @@
-var profile = document.getElementsByClassName("dropdown-toggle")[1].innerText;
+// var profile = document.getElementsByClassName("dropdown-toggle")[1].innerText;
+var profile = document.querySelector(`.header-finance-icon .badge`).innerText;
 profile = profile.trim();
-if (profile == "Продавец") {
+if (profile == "П") {
   var setIntervalId = setInterval(function () {
     var h3 = document.getElementsByTagName("h3")[0];
     // Подгрузка всего контента
