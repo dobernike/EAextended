@@ -19,6 +19,7 @@ KH16TT Denso в корзине ошибка, а в накладной, нет.
 AP107/8 Filtron
 basket.js:80 Uncaught TypeError: Cannot read property '1' of null
 at basket.js:80
+а в накладной работает.
 
 в корзине больше 1 GFFH-061 Onnuri не работает?
 
