@@ -5,6 +5,8 @@ In future Opera, Yandex browser, EDGE and last IE, Electron and React.Native
 
 ## Issue
 
+Добавил все в github issue:
+
 в серче на главном nan
 GFLH-002
 
