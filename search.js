@@ -11,22 +11,27 @@ if (profile.textContent.trim() !== "П") {
 
 function changePrimary() {
   let setIntervalId = setInterval(function () {
+    //----------------------
     const blockContentLc = document.querySelector('#block-content-lc');
+    //---------------------- /
     const oldListingGroup = blockContentLc.querySelector('.old-listing-group');
+
     // Подгрузка контента Основной склад
     if (oldListingGroup) {
       clearTimeout(timeoutId);
       clearInterval(setIntervalId);
 
-      const itemPrices = oldListingGroup.querySelectorAll('.old-appraise-item-price.use-price-level.blue');
+      const itemPrices = oldListingGroup.querySelectorAll('.old-appraise-item-price.use-price-level');
+      //----------------------
       const itemNames = oldListingGroup.querySelectorAll('.old-appraise-item-description');
       let firstItemName = itemNames[1].textContent.toLowerCase();
       const isOil = /\масло/.test(firstItemName);
+      //---------------------- /
 
       for (const itemPrice of itemPrices) {
         const eaPrice = +itemPrice.dataset.priceEa;
         const optPrice = +itemPrice.dataset.priceOpt;
-
+        //---------------------- 
         if (isOil) {
           itemPrice.textContent = roundDown(eaPrice, 50);
         } else {
@@ -39,8 +44,9 @@ function changePrimary() {
             itemPrice.textContent = newFixedPrice;
           }
         }
-        let finalPrice = +itemPrice.textContent;
-        let profit = +itemPrice.textContent - optPrice;
+        const finalPrice = +itemPrice.textContent;
+        const profit = +itemPrice.textContent - optPrice;
+        //---------------------- /
 
         itemPrice.innerHTML = finalPrice + "<span style='color: red'>|</span><span style='color: green;'>" + profit + "</span>";
       }
@@ -50,55 +56,30 @@ function changePrimary() {
 }
 
 function changeSecondary() {
-  let setIntervalId2 = setInterval(function () {
-    var h3Roznica = document.getElementsByTagName("h3")[1];
+  let setIntervalId = setInterval(function () {
+    //----------------------
+    const blockContentLdc = document.querySelector('#block-content-ldc');
+    //---------------------- /
+    const oldListingGroup = blockContentLdc.querySelector('.old-listing-group');
 
-    if (h3Roznica && h3Roznica.textContent === "Новые запчасти под заказ") {
-      h3Roznica = document.getElementsByTagName("h3")[0];
-    }
+    // Подгрузка контента Розница склад
+    if (oldListingGroup) {
+      clearTimeout(timeoutId);
+      clearInterval(setIntervalId);
 
-    if (h3Roznica && h3Roznica.textContent === "Розничная сеть") {
-      clearTimeout(timeoutID2);
-      clearInterval(setIntervalId2);
+      const itemPrices = oldListingGroup.querySelectorAll('.old-appraise-item-price.use-price-level');
 
-      var retail = document.getElementById("block-content-ldc");
-      var priceRetail = retail.getElementsByClassName(
-        "old-appraise-item-price"
-      );
-      var originalRetailPrice = retail.getElementsByClassName(
-        "old-appraise-item-retail-price-num"
-      );
-      // var infoRetail = retail.getElementsByClassName("fa fa-info-circle");
-      var profitRetail = 0;
+      for (const itemPrice of itemPrices) {
+        const eaPrice = +itemPrice.dataset.priceEa;
+        const optPrice = +itemPrice.dataset.priceOpt;
 
-      for (var j = 0; j < priceRetail.length; j++) {
-        var clearPriceRetail = priceRetail[j].textContent
-          .replace(" a", "")
-          .replace(" ", "");
-        var clearOriginalRetailPrice = originalRetailPrice[j].textContent
-          .replace(" a ", "")
-          .replace(" ", "");
-        // infoRetail[j].setAttribute("style", "color:green");
+        const profit = eaPrice - optPrice;
 
-        if (Number(clearOriginalRetailPrice) != 0) {
-          profitRetail =
-            Number(clearOriginalRetailPrice) - Number(clearPriceRetail);
-          priceRetail[j].textContent = clearOriginalRetailPrice;
-        } else {
-          profitRetail = 0;
-          priceRetail[j].textContent = Number(clearPriceRetail);
-        }
-
-        var finalRetainPrice = Number(priceRetail[j].textContent);
-        priceRetail[j].innerHTML = finalRetainPrice + "<span style='color: red'>|</span><span style='color: green;'>" + profitRetail + "</span>";
+        itemPrice.innerHTML = eaPrice + "<span style='color: red'>|</span><span style='color: green;'>" + profit + "</span>";
       }
     }
   }, 100);
-  let timeoutID2 = setTimeout(() => { clearInterval(setIntervalId2) }, 10000);
-}
-
-function allInOne() {
-
+  let timeoutId = setTimeout(() => { clearInterval(setIntervalId) }, 10000); // 10s
 }
 
 function roundUp(num, precision) {
