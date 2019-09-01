@@ -1,61 +1,63 @@
-// var profile = document.getElementsByClassName("dropdown-toggle")[1].innerText;
-var profile = document.querySelector(`.header-finance-icon .badge`).innerText;
-profile = profile.trim();
-if (profile == "П") {
-  var setIntervalId = setInterval(function () {
-    var h3 = document.getElementsByTagName("h3")[0];
-    // Подгрузка всего контента
-    if (h3 && h3.innerText === "Основной склад") {
-      // Основной склад
-      clearTimeout(timeoutID);
+let profile = document.querySelector(`.header-finance-icon .badge`);
+
+if (profile.textContent.trim() !== "П") {
+  console.log("Включи продавец");
+} else {
+  // Загрузка цен Основной 
+  changePrimary();
+  // Загрузка цен Розница
+  changeSecondary();
+}
+
+function changePrimary() {
+  let setIntervalId = setInterval(function () {
+    const blockContentLc = document.querySelector('#block-content-lc');
+    const oldListingGroup = blockContentLc.querySelector('.old-listing-group');
+    // Подгрузка контента Основной склад
+    if (oldListingGroup) {
+      clearTimeout(timeoutId);
       clearInterval(setIntervalId);
 
-      var opt = document.getElementsByClassName("old-listing-group")[0];
-      var price = opt.getElementsByClassName(
-        "old-appraise-item-price use-price-level blue"
-      );
-      var itemName = opt.getElementsByClassName(
-        "old-appraise-item-description"
-      )[1].innerText;
-      itemName = itemName.match(/\Масло/);
-      // var info = opt.getElementsByClassName("fa fa-info-circle");
+      const itemPrices = oldListingGroup.querySelectorAll('.old-appraise-item-price.use-price-level.blue');
+      const itemNames = oldListingGroup.querySelectorAll('.old-appraise-item-description');
+      let firstItemName = itemNames[1].textContent.toLowerCase();
+      const isOil = /\масло/.test(firstItemName);
 
-      for (var i = 0; i < price.length; i++) {
-        // info[i].setAttribute("style", "color:green");
-        var eaPrice = Number(
-          price[i].getAttribute("data-price-ea").replace(" ", "")
-        );
-        var optPrice = Number(
-          price[i].getAttribute("data-price-opt").replace(" ", "")
-        );
-        if (itemName && itemName[0].toLowerCase() === "масло") {
-          price[i].innerText = roundDown(eaPrice, 50);
+      for (const itemPrice of itemPrices) {
+        const eaPrice = +itemPrice.dataset.priceEa;
+        const optPrice = +itemPrice.dataset.priceOpt;
+
+        if (isOil) {
+          itemPrice.textContent = roundDown(eaPrice, 50);
         } else {
-          var newPrice = roundUp(eaPrice * 0.85, 50);
-          var newFixedPrice = roundDown(eaPrice, 50);
+          let newPrice = roundUp(eaPrice * 0.85, 50);
+          let newFixedPrice = roundDown(eaPrice, 50);
+
           if (newPrice > optPrice) {
-            price[i].innerText = newPrice;
+            itemPrice.textContent = newPrice;
           } else if (newFixedPrice > optPrice) {
-            price[i].innerText = newFixedPrice;
+            itemPrice.textContent = newFixedPrice;
           }
         }
-        var finalPrice = Number(price[i].innerText);
-        var profit = Number(price[i].innerText) - optPrice;
-        price[i].innerHTML = finalPrice + "<span style='color: red'>|</span><span style='color: green;'>" + profit + "</span>";
+        let finalPrice = +itemPrice.textContent;
+        let profit = +itemPrice.textContent - optPrice;
 
+        itemPrice.innerHTML = finalPrice + "<span style='color: red'>|</span><span style='color: green;'>" + profit + "</span>";
       }
     }
-    var timeoutID = setTimeout(() => {
-      clearInterval(setIntervalId);
-    }, 5000);
   }, 100);
-  // Розница
-  var setIntervalId2 = setInterval(function () {
+  let timeoutId = setTimeout(() => { clearInterval(setIntervalId) }, 10000); // 10s
+}
+
+function changeSecondary() {
+  let setIntervalId2 = setInterval(function () {
     var h3Roznica = document.getElementsByTagName("h3")[1];
-    if (h3Roznica && h3Roznica.innerText === "Новые запчасти под заказ") {
+
+    if (h3Roznica && h3Roznica.textContent === "Новые запчасти под заказ") {
       h3Roznica = document.getElementsByTagName("h3")[0];
     }
-    if (h3Roznica && h3Roznica.innerText === "Розничная сеть") {
+
+    if (h3Roznica && h3Roznica.textContent === "Розничная сеть") {
       clearTimeout(timeoutID2);
       clearInterval(setIntervalId2);
 
@@ -70,35 +72,38 @@ if (profile == "П") {
       var profitRetail = 0;
 
       for (var j = 0; j < priceRetail.length; j++) {
-        var clearPriceRetail = priceRetail[j].innerText
+        var clearPriceRetail = priceRetail[j].textContent
           .replace(" a", "")
           .replace(" ", "");
-        var clearOriginalRetailPrice = originalRetailPrice[j].innerText
+        var clearOriginalRetailPrice = originalRetailPrice[j].textContent
           .replace(" a ", "")
           .replace(" ", "");
         // infoRetail[j].setAttribute("style", "color:green");
+
         if (Number(clearOriginalRetailPrice) != 0) {
           profitRetail =
             Number(clearOriginalRetailPrice) - Number(clearPriceRetail);
-          priceRetail[j].innerText = clearOriginalRetailPrice;
+          priceRetail[j].textContent = clearOriginalRetailPrice;
         } else {
           profitRetail = 0;
-          priceRetail[j].innerText = Number(clearPriceRetail);
+          priceRetail[j].textContent = Number(clearPriceRetail);
         }
-        var finalRetainPrice = Number(priceRetail[j].innerText);
+
+        var finalRetainPrice = Number(priceRetail[j].textContent);
         priceRetail[j].innerHTML = finalRetainPrice + "<span style='color: red'>|</span><span style='color: green;'>" + profitRetail + "</span>";
       }
     }
-    var timeoutID2 = setTimeout(() => {
-      clearInterval(setIntervalId2);
-    }, 5000);
   }, 100);
-} else {
-  console.log("Включи продавец");
+  let timeoutID2 = setTimeout(() => { clearInterval(setIntervalId2) }, 10000);
+}
+
+function allInOne() {
+
 }
 
 function roundUp(num, precision) {
-  return Math.round(num / precision) * precision;
+  return num > precision ? Math.round(num / precision) * precision
+    : Math.round(num);
 }
 
 function roundDown(num, precision) {
