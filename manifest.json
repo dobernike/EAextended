@@ -1,7 +1,7 @@
 ﻿{
   "manifest_version": 2,
   "name": "EAextend",
-  "version": "3.0",
+  "version": "3.1",
   "description": "Автоматизация продаж EA",
   "icons": {
     "48": "img/icon.png"
@@ -23,8 +23,10 @@
     "http://amtel.club/*"
   ],
 
-  "content_scripts": [{
-      "matches": ["http://euroauto.ru/raschet_stoimosti_rabot/*",
+  "content_scripts": [
+    {
+      "matches": [
+        "http://euroauto.ru/raschet_stoimosti_rabot/*",
         "https://euroauto.ru/raschet_stoimosti_rabot/*"
       ],
       "js": ["workPrice.js"],
@@ -47,12 +49,18 @@
     },
     {
       "matches": ["https://amtel.club/cabinet/invoice/print/*"],
-      "js": ["lib/jquery-3.3.1.min.js", "lib/JsBarcode.code128.min.js", "invoiceOpt.js"],
+      "js": [
+        "lib/jquery-3.3.1.min.js",
+        "lib/JsBarcode.code128.min.js",
+        "invoiceOpt.js"
+      ],
       "run_at": "document_end"
     },
     {
       "matches": ["https://amtel.club/cabinet/history/ldc/print/*"],
-      "js": ["lib/jquery-3.3.1.min.js", "lib/JsBarcode.code128.min.js",
+      "js": [
+        "lib/jquery-3.3.1.min.js",
+        "lib/JsBarcode.code128.min.js",
         "invoiceEa.js"
       ],
       "run_at": "document_end"
